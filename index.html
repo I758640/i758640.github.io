@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="J Likithesh — UX Designer at SAP. I design AI-powered experiences that simplify complex enterprise workflows.">
+  <title>J Likithesh — UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* =============================================
+       TOKENS
+    ============================================= */
+    :root {
+      --f-display: 'Space Grotesk', sans-serif;
+      --f-body:    'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg:           #08080F;
+      --bg-2:         #0C0C17;
+      --bg-3:         #10101E;
+      --border:       rgba(255,255,255,0.065);
+      --border-h:     rgba(255,255,255,0.13);
+      --t1:           #F0F0FF;
+      --t2:           #717190;
+      --t3:           #38384E;
+      --accent:       #1A68FF;
+      --accent-h:     #3B7FFF;
+      --accent-glow:  rgba(26,104,255,0.14);
+      --accent-b:     rgba(26,104,255,0.22);
+      --tag-bg:       rgba(26,104,255,0.10);
+      --tag-c:        #6B9FFF;
+      --nav-bg:       rgba(8,8,15,0.82);
+    }
+    [data-theme="light"] {
+      --bg:           #F4F4FA;
+      --bg-2:         #FAFAFA;
+      --bg-3:         #FFFFFF;
+      --border:       rgba(0,0,0,0.07);
+      --border-h:     rgba(0,0,0,0.13);
+      --t1:           #0C0C1A;
+      --t2:           #56566E;
+      --t3:           #AAAABB;
+      --accent:       #1A68FF;
+      --accent-h:     #0A52E8;
+      --accent-glow:  rgba(26,104,255,0.08);
+      --accent-b:     rgba(26,104,255,0.18);
+      --tag-bg:       rgba(26,104,255,0.08);
+      --tag-c:        #1A68FF;
+      --nav-bg:       rgba(244,244,250,0.85);
+    }
+
+    /* =============================================
+       RESET
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-body);
+      background: var(--bg);
+      color: var(--t1);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background .3s var(--ease), color .3s var(--ease);
+      cursor: none;
+    }
+    ::selection { background: var(--accent-glow); }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--t3); border-radius: 2px; }
+
+    /* =============================================
+       CUSTOM CURSOR
+    ============================================= */
+    .cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: opacity .2s, transform .1s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(26,104,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform .12s var(--ease), width .2s var(--ease), height .2s var(--ease), border-color .2s;
+    }
+    body.cursor-hover .cursor-ring {
+      width: 56px; height: 56px;
+      border-color: rgba(26,104,255,0.3);
+    }
+    body.cursor-hover .cursor-dot { transform: translate(-50%,-50%) scale(0.4); }
+
+    /* =============================================
+       LAYOUT
+    ============================================= */
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    @media (max-width: 760px) { .wrap { padding: 0 22px; } }
+
+    /* =============================================
+       NAV
+    ============================================= */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 24px 0;
+      transition: all .3s var(--ease);
+    }
+    nav.stuck {
+      background: var(--nav-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo {
+      font-family: var(--f-display);
+      font-size: 19px; font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo em { color: var(--accent); font-style: normal; }
+    .nav-links { display: flex; gap: 34px; list-style: none; }
+    .nav-links a { font-size: 13.5px; font-weight: 500; color: var(--t2); transition: color .2s; }
+    .nav-links a:hover { color: var(--t1); }
+    .nav-end { display: flex; align-items: center; gap: 10px; }
+
+    .btn-icon {
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; border: 1px solid var(--border);
+      background: transparent; color: var(--t2);
+      cursor: none; transition: all .2s;
+    }
+    .btn-icon:hover { border-color: var(--border-h); color: var(--t1); background: var(--accent-glow); }
+
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--accent); color: #fff;
+      padding: 9px 20px; border-radius: 100px;
+      font-size: 13.5px; font-weight: 600;
+      border: none; cursor: none;
+      transition: background .2s, transform .2s;
+    }
+    .btn-cta:hover { background: var(--accent-h); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: transparent; color: var(--t1);
+      padding: 9px 20px; border-radius: 100px;
+      font-size: 13.5px; font-weight: 600;
+      border: 1px solid var(--border); cursor: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: var(--border-h); background: var(--accent-glow); }
+
+    @media (max-width: 760px) { .nav-links { display: none; } }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 130px 0 90px;
+      position: relative; overflow: hidden;
+    }
+    /* Subtle grid */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 80% 80% at 65% 50%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 65% 50%, black 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* Glow behind photo */
+    #hero::after {
+      content: '';
+      position: absolute;
+      right: 5%; top: 15%;
+      width: 580px; height: 580px;
+      background: radial-gradient(circle, rgba(26,104,255,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 72px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    @media (max-width: 1024px) { .hero-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+    /* Left */
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: 100px; padding: 6px 14px 6px 8px;
+      margin-bottom: 28px;
+    }
+    .hero-pill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(26,104,255,0.2);
+      animation: pulse-dot 2.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow: 0 0 0 3px rgba(26,104,255,0.2); }
+      50%      { box-shadow: 0 0 0 6px rgba(26,104,255,0); }
+    }
+    .hero-pill-txt { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--t2); }
+
+    .hero-h1 {
+      font-family: var(--f-display);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      color: var(--t1);
+      margin-bottom: 12px;
+    }
+    .hero-h1 .grad {
+      background: linear-gradient(135deg, #1A68FF 0%, #7AB5FF 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-role {
+      font-family: var(--f-display);
+      font-size: clamp(17px, 2vw, 24px);
+      font-weight: 500; color: var(--t2);
+      letter-spacing: -0.01em; margin-bottom: 22px;
+    }
+    .hero-line {
+      width: 40px; height: 2px;
+      background: var(--accent); border-radius: 1px;
+      margin-bottom: 22px;
+    }
+    .hero-tagline {
+      font-size: clamp(15px, 1.4vw, 17.5px);
+      color: var(--t2); line-height: 1.75;
+      max-width: 500px; margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .hero-social {
+      display: flex; align-items: center; gap: 18px;
+      margin-top: 40px;
+    }
+    .s-link {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; color: var(--t3);
+      transition: color .2s;
+    }
+    .s-link:hover { color: var(--t2); }
+    .s-sep { color: var(--border); font-size: 16px; }
+
+    /* Right — Photo */
+    .hero-photo-col { position: relative; }
+    .photo-frame {
+      border-radius: 28px; overflow: hidden;
+      background: var(--bg-3); border: 1px solid var(--border);
+      aspect-ratio: 4/5; position: relative;
+    }
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      transition: transform .5s var(--ease);
+    }
+    .photo-frame:hover img { transform: scale(1.025); }
+
+    .floating-card {
+      position: absolute; bottom: -20px; left: -20px;
+      background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: 18px; padding: 16px 22px;
+      backdrop-filter: blur(20px);
+    }
+    .fc-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--t3); margin-bottom: 3px; }
+    .fc-val { font-family: var(--f-display); font-size: 20px; font-weight: 700; line-height: 1; }
+    .fc-sub { font-size: 11.5px; color: var(--t2); margin-top: 3px; }
+
+    /* =============================================
+       SECTION COMMON
+    ============================================= */
+    section { padding: 120px 0; }
+    .s-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .11em;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .s-label::before { content: ''; display: block; width: 18px; height: 2px; background: var(--accent); border-radius: 1px; }
+    .s-head {
+      font-family: var(--f-display);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700; line-height: 1.07;
+      letter-spacing: -0.028em;
+      max-width: 600px;
+    }
+    .s-sub { margin-top: 12px; font-size: 17px; color: var(--t2); line-height: 1.65; max-width: 520px; }
+    .s-hdr { margin-bottom: 56px; }
+
+    /* =============================================
+       WORK
+    ============================================= */
+    #work { background: var(--bg); }
+
+    .project-list { display: flex; flex-direction: column; gap: 20px; }
+
+    .pcard {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 24px; overflow: hidden;
+      transition: border-color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease);
+    }
+    .pcard:hover {
+      border-color: var(--border-h);
+      transform: translateY(-4px);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.28);
+    }
+
+    /* Text block */
+    .p-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px; padding: 48px 52px 40px;
+    }
+    @media (max-width: 860px) {
+      .p-body { grid-template-columns: 1fr; padding: 32px 26px 28px; gap: 22px; }
+    }
+
+    .p-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .ptag {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--tag-c);
+      background: var(--tag-bg); padding: 4px 10px; border-radius: 100px;
+    }
+    .pnum { font-size: 11px; font-weight: 700; letter-spacing: .05em; color: var(--t3); margin-left: auto; }
+    .p-title {
+      font-family: var(--f-display);
+      font-size: clamp(19px, 1.9vw, 25px);
+      font-weight: 700; line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .p-problem { font-size: 14.5px; color: var(--t2); line-height: 1.75; }
+
+    .p-details { display: flex; flex-direction: column; gap: 11px; margin-bottom: 20px; }
+    .p-row { display: flex; gap: 12px; align-items: flex-start; }
+    .p-key {
+      font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: var(--t3);
+      min-width: 52px; padding-top: 2px; flex-shrink: 0;
+    }
+    .p-val { font-size: 13px; color: var(--t2); line-height: 1.65; }
+
+    .p-outcome {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--accent-glow); border: 1px solid var(--accent-b);
+      border-radius: 11px; padding: 13px 16px; margin-bottom: 22px;
+    }
+    .p-outcome svg { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+    .p-outcome-txt { font-size: 13px; color: var(--t2); line-height: 1.65; }
+
+    .p-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      transition: gap .2s;
+    }
+    .p-cta:hover { gap: 12px; }
+
+    /* ── Abstract visual panels ── */
+    .p-visual {
+      position: relative; overflow: hidden;
+      margin: 0 20px 20px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .3s;
+    }
+    .pcard:hover .p-visual { border-color: rgba(26,104,255,0.2); }
+
+    /* P1: Migration — flowing path */
+    .pv-migration {
+      background: linear-gradient(135deg, #07081A 0%, #0A0D2E 60%, #080F1F 100%);
+    }
+    .pv-migration .vis-svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+    /* P2: Monitoring — status grid */
+    .pv-monitoring {
+      background: linear-gradient(135deg, #080C18 0%, #090A1E 60%, #060B16 100%);
+    }
+    .pv-monitoring .vis-svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+    /* Research card — no visual, just stats */
+    .pcard.research .p-body { grid-template-columns: 1fr; max-width: 860px; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 28px; margin-top: 24px; }
+    .stt { text-align: center; }
+    .stt-n { font-family: var(--f-display); font-size: 34px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 5px; }
+    .stt-l { font-size: 12px; color: var(--t3); line-height: 1.5; }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    #about {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 340px; gap: 72px; align-items: start; }
+    @media (max-width: 1020px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    .about-quote {
+      font-family: var(--f-display);
+      font-size: clamp(22px, 2.8vw, 36px);
+      font-weight: 700; line-height: 1.22;
+      letter-spacing: -0.02em; margin-bottom: 26px;
+    }
+    .about-quote .hl { color: var(--accent); }
+    .about-body { font-size: 16px; color: var(--t2); line-height: 1.78; }
+    .about-body p+p { margin-top: 14px; }
+
+    .about-facts { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+    .afact { display: flex; align-items: center; gap: 11px; font-size: 14px; color: var(--t2); }
+    .afact-ico {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--accent-glow); display: flex;
+      align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0;
+    }
+
+    .about-photo {
+      border-radius: 24px; overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 1/1; background: var(--bg-3);
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+
+    /* =============================================
+       SKILLS
+    ============================================= */
+    #skills { background: var(--bg); }
+
+    .skills-bento {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .skills-bento { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 560px) { .skills-bento { grid-template-columns: 1fr; } }
+
+    .sk-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 18px; padding: 26px;
+      transition: border-color .25s, background .25s;
+    }
+    .sk-card:hover { border-color: var(--border-h); background: var(--bg-3); }
+    .sk-card.span2 { grid-column: span 2; }
+
+    .sk-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--accent-glow);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .sk-title { font-family: var(--f-display); font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill {
+      font-size: 12px; font-weight: 500; color: var(--t2);
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 4px 11px; border-radius: 100px; transition: all .18s;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+    /* Cert card */
+    .cert-row { grid-column: 1 / -1; }
+    .cert-card {
+      display: flex; align-items: center; gap: 20px;
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 18px; padding: 24px 28px;
+      transition: all .25s; text-decoration: none; color: inherit;
+    }
+    .cert-card:hover { border-color: var(--accent-b); background: var(--accent-glow); }
+    .cert-ico {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, #4285F4 0%, #0F9D58 50%, #F4B400 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-family: var(--f-display); font-size: 20px; font-weight: 700;
+    }
+    .cert-body { flex: 1; }
+    .cert-org { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--t3); margin-bottom: 3px; }
+    .cert-name { font-family: var(--f-display); font-size: 16px; font-weight: 700; }
+    .cert-link-txt { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 4px; transition: gap .18s; }
+    .cert-card:hover .cert-link-txt { gap: 10px; }
+    .cert-arr { color: var(--t3); transition: transform .2s, color .2s; }
+    .cert-card:hover .cert-arr { transform: translate(3px,-3px); color: var(--accent); }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact { background: var(--bg-2); border-top: 1px solid var(--border); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    .c-head {
+      font-family: var(--f-display);
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 700; line-height: 1.06;
+      letter-spacing: -0.03em; margin-bottom: 16px;
+    }
+    .c-sub { font-size: 16.5px; color: var(--t2); line-height: 1.65; }
+
+    .c-items { display: flex; flex-direction: column; gap: 10px; }
+    .c-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 17px 20px; background: var(--bg-3);
+      border: 1px solid var(--border); border-radius: 13px;
+      transition: all .25s; text-decoration: none; color: inherit;
+    }
+    .c-item:hover { border-color: var(--accent-b); background: var(--accent-glow); transform: translateX(5px); }
+    .c-ico {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--accent-glow); border: 1px solid var(--accent-b);
+      display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0;
+    }
+    .c-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--t3); margin-bottom: 2px; }
+    .c-val { font-family: var(--f-display); font-size: 14.5px; font-weight: 600; }
+    .c-arr { margin-left: auto; color: var(--t3); transition: transform .2s, color .2s; }
+    .c-item:hover .c-arr { transform: translateX(4px); color: var(--accent); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer { padding: 28px 0; border-top: 1px solid var(--border); background: var(--bg); }
+    .foot-row { display: flex; align-items: center; justify-content: space-between; }
+    @media (max-width: 560px) { .foot-row { flex-direction: column; gap: 8px; text-align: center; } }
+    .foot-logo { font-family: var(--f-display); font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+    .foot-logo em { color: var(--accent); font-style: normal; }
+    .foot-copy { font-size: 12.5px; color: var(--t3); }
+
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .65s var(--ease), transform .65s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot"  id="cd"></div>
+  <div class="cursor-ring" id="cr"></div>
+
+  <!-- ==================== NAV ==================== -->
+  <nav id="nav">
+    <div class="wrap">
+      <div class="nav-row">
+        <a href="#hero" class="nav-logo">JL<em>.</em></a>
+        <ul class="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-end">
+          <button class="btn-icon" id="themeBtn" aria-label="Toggle theme">
+            <svg id="i-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg id="i-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+          <a href="#contact" class="btn-cta">
+            Let's Talk
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+
+        <div class="hero-left">
+          <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            <span class="hero-pill-txt">UX Designer &nbsp;·&nbsp; SAP &nbsp;·&nbsp; 5 Years</span>
+          </div>
+          <h1 class="hero-h1">
+            J&nbsp;Liki<span class="grad">thesh</span>
+          </h1>
+          <p class="hero-role">UX Designer — AI &amp; Enterprise</p>
+          <div class="hero-line"></div>
+          <p class="hero-tagline">
+            I design AI-powered experiences that simplify complex enterprise workflows — turning technical complexity into intuitive, human-centered products.
+          </p>
+          <div class="hero-actions">
+            <a href="#work" class="btn-cta">
+              View Work
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#contact" class="btn-ghost">Get in Touch</a>
+          </div>
+          <div class="hero-social">
+            <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="s-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <span class="s-sep">·</span>
+            <a href="mailto:likhiteshj19@gmail.com" class="s-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-photo-col">
+          <div class="photo-frame">
+            <img src="assets/photo.jpg" alt="J Likithesh — UX Designer at SAP">
+          </div>
+          <div class="floating-card">
+            <div class="fc-lbl">Currently at</div>
+            <div class="fc-val">SAP</div>
+            <div class="fc-sub">AI &amp; Enterprise UX</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WORK ==================== -->
+  <section id="work">
+    <div class="wrap">
+
+      <div class="s-hdr reveal">
+        <span class="s-label">Selected Work</span>
+        <h2 class="s-head">Designing for complexity<br>at enterprise scale</h2>
+        <p class="s-sub">Three projects that shaped AI-first experiences for enterprise users at SAP.</p>
+      </div>
+
+      <div class="project-list">
+
+        <!-- ── P1: Migration ── -->
+        <div class="pcard reveal">
+          <div class="p-body">
+            <div>
+              <div class="p-meta">
+                <span class="ptag">AI-First Design</span>
+                <span class="ptag">Enterprise UX</span>
+                <span class="pnum">01</span>
+              </div>
+              <h3 class="p-title">Joule Studio 1.0 → 2.0<br>Migration Experience</h3>
+              <p class="p-problem">Users needed to migrate solutions between Joule Studio versions, but the process involved complex technical decisions, multiple states, and no clear guidance. The system needed to feel intelligent — not intimidating.</p>
+            </div>
+            <div>
+              <div class="p-details">
+                <div class="p-row">
+                  <span class="p-key">Role</span>
+                  <span class="p-val">UX Designer — user flows, IA, AI-first interaction model, migration dashboard, readiness experience &amp; error states</span>
+                </div>
+                <div class="p-row">
+                  <span class="p-key">Focus</span>
+                  <span class="p-val">Conversational UX · Migration Readiness · Error Recovery · State Communication</span>
+                </div>
+              </div>
+              <div class="p-outcome">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="p-outcome-txt">Designed an AI-first migration experience guiding users through every step — communicating readiness, progress, and next actions — reducing cognitive load in a high-stakes workflow.</span>
+              </div>
+              <a href="https://www.figma.com/design/mNi6IrSLcixi5EaJh629MD/" target="_blank" rel="noopener" class="p-cta">
+                View in Figma
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Abstract visual: Migration flow -->
+          <div class="p-visual pv-migration">
+            <svg class="vis-svg" viewBox="0 0 1140 320" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="grad-m1" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#1A68FF" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="#6B47FF" stop-opacity="0.7"/>
+                </linearGradient>
+                <linearGradient id="grad-m2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1A68FF" stop-opacity="0.12"/>
+                  <stop offset="100%" stop-color="#1A68FF" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="glow-m">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+
+              <!-- Background glow blobs -->
+              <ellipse cx="300" cy="160" rx="200" ry="120" fill="rgba(26,104,255,0.05)"/>
+              <ellipse cx="850" cy="160" rx="200" ry="120" fill="rgba(107,71,255,0.05)"/>
+
+              <!-- V1 box -->
+              <rect x="60" y="90" width="220" height="140" rx="12" fill="rgba(26,104,255,0.08)" stroke="rgba(26,104,255,0.3)" stroke-width="1"/>
+              <text x="170" y="148" text-anchor="middle" fill="rgba(26,104,255,0.9)" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">JOULE STUDIO</text>
+              <text x="170" y="168" text-anchor="middle" fill="rgba(107,133,255,0.7)" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700">v1.0</text>
+              <!-- Mini UI elements inside box -->
+              <rect x="82" y="185" width="80" height="8" rx="4" fill="rgba(26,104,255,0.2)"/>
+              <rect x="82" y="198" width="50" height="8" rx="4" fill="rgba(26,104,255,0.12)"/>
+              <circle cx="236" cy="189" r="8" fill="rgba(255,189,46,0.3)" stroke="rgba(255,189,46,0.6)" stroke-width="1"/>
+              <text x="236" y="193" text-anchor="middle" fill="rgba(255,189,46,0.9)" font-family="sans-serif" font-size="9">!</text>
+
+              <!-- Arrow path -->
+              <path d="M285 160 Q400 80 500 130 Q600 180 660 160" stroke="url(#grad-m1)" stroke-width="1.5" stroke-dasharray="6 4" fill="none" filter="url(#glow-m)"/>
+              <path d="M285 160 Q400 240 500 190 Q600 140 660 160" stroke="rgba(26,104,255,0.2)" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
+
+              <!-- Midpoint agent bubble -->
+              <circle cx="475" cy="160" r="30" fill="rgba(26,104,255,0.08)" stroke="rgba(26,104,255,0.25)" stroke-width="1"/>
+              <text x="475" y="155" text-anchor="middle" fill="rgba(107,159,255,0.9)" font-family="Space Grotesk, sans-serif" font-size="8" font-weight="600">AI</text>
+              <text x="475" y="168" text-anchor="middle" fill="rgba(107,159,255,0.7)" font-family="Space Grotesk, sans-serif" font-size="7">GUIDE</text>
+
+              <!-- Arrow head -->
+              <path d="M652 153 L668 160 L652 167" stroke="rgba(107,71,255,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+              <!-- V2 box -->
+              <rect x="680" y="90" width="220" height="140" rx="12" fill="rgba(107,71,255,0.08)" stroke="rgba(107,71,255,0.3)" stroke-width="1"/>
+              <text x="790" y="148" text-anchor="middle" fill="rgba(107,71,255,0.9)" font-family="Space Grotesk, sans-serif" font-size="11" font-weight="600" letter-spacing="0.08em">JOULE STUDIO</text>
+              <text x="790" y="168" text-anchor="middle" fill="rgba(150,130,255,0.8)" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700">v2.0</text>
+              <!-- Mini UI elements -->
+              <rect x="702" y="185" width="80" height="8" rx="4" fill="rgba(107,71,255,0.2)"/>
+              <rect x="702" y="198" width="110" height="8" rx="4" fill="rgba(107,71,255,0.15)"/>
+              <circle cx="854" cy="189" r="8" fill="rgba(39,201,63,0.3)" stroke="rgba(39,201,63,0.6)" stroke-width="1"/>
+              <path d="M850 189 L853 192 L858 186" stroke="rgba(39,201,63,0.9)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+              <!-- Status steps below -->
+              <g transform="translate(920,80)">
+                <rect x="0" y="0" width="160" height="36" rx="8" fill="rgba(26,104,255,0.06)" stroke="rgba(26,104,255,0.15)" stroke-width="1"/>
+                <circle cx="16" cy="18" r="5" fill="rgba(39,201,63,0.8)"/>
+                <text x="28" y="22" fill="rgba(200,210,255,0.7)" font-family="Space Grotesk, sans-serif" font-size="10">Readiness Check</text>
+                <rect x="0" y="46" width="160" height="36" rx="8" fill="rgba(26,104,255,0.06)" stroke="rgba(26,104,255,0.15)" stroke-width="1"/>
+                <circle cx="16" cy="64" r="5" fill="rgba(39,201,63,0.8)"/>
+                <text x="28" y="68" fill="rgba(200,210,255,0.7)" font-family="Space Grotesk, sans-serif" font-size="10">Version Select</text>
+                <rect x="0" y="92" width="160" height="36" rx="8" fill="rgba(26,104,255,0.06)" stroke="rgba(26,104,255,0.15)" stroke-width="1"/>
+                <circle cx="16" cy="110" r="5" fill="rgba(255,189,46,0.8)"/>
+                <text x="28" y="114" fill="rgba(200,210,255,0.7)" font-family="Space Grotesk, sans-serif" font-size="10">Migration</text>
+                <rect x="0" y="138" width="160" height="36" rx="8" fill="rgba(26,104,255,0.06)" stroke="rgba(26,104,255,0.15)" stroke-width="1"/>
+                <circle cx="16" cy="156" r="5" fill="rgba(200,210,255,0.2)" stroke="rgba(200,210,255,0.3)" stroke-width="1"/>
+                <text x="28" y="160" fill="rgba(200,210,255,0.4)" font-family="Space Grotesk, sans-serif" font-size="10">Complete</text>
+              </g>
+
+              <!-- Bottom gradient fade -->
+              <rect x="0" y="240" width="1140" height="80" fill="url(#grad-m2)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- ── P2: Monitoring ── -->
+        <div class="pcard reveal d1">
+          <div class="p-body">
+            <div>
+              <div class="p-meta">
+                <span class="ptag">Interaction Design</span>
+                <span class="ptag">Data Management</span>
+                <span class="pnum">02</span>
+              </div>
+              <h3 class="p-title">Execution Monitoring<br>&amp; Mass Actions</h3>
+              <p class="p-problem">Managing hundreds of execution instances required more than a table. Users needed to understand state, act in bulk, handle API constraints gracefully, and recover from failures — all in one coherent experience.</p>
+            </div>
+            <div>
+              <div class="p-details">
+                <div class="p-row">
+                  <span class="p-key">Role</span>
+                  <span class="p-val">UX Designer — IA, interaction design, mass-action flows, action states, error handling, tooltips, dialogs &amp; UX copy</span>
+                </div>
+                <div class="p-row">
+                  <span class="p-key">Focus</span>
+                  <span class="p-val">Bulk Selection · API Limit Handling · Retry Flows · State Design · Contextual Guidance</span>
+                </div>
+              </div>
+              <div class="p-outcome">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="p-outcome-txt">Designed comprehensive bulk-management patterns including Select All, 100-instance API limits, retry flows, disabled states, and guidance for Retry, Resume, Suspend, Restart, and Cancel.</span>
+              </div>
+              <a href="https://www.figma.com/design/RmsqAx2GKv6cmGFBlnkaPo/" target="_blank" rel="noopener" class="p-cta">
+                View in Figma
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Abstract visual: Monitoring status grid -->
+          <div class="p-visual pv-monitoring">
+            <svg class="vis-svg" viewBox="0 0 1140 320" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="grad-mon-fade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(8,12,24,0)"/>
+                  <stop offset="100%" stop-color="rgba(8,12,24,1)"/>
+                </linearGradient>
+                <filter id="glow-mon">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+
+              <!-- Background radial glow -->
+              <ellipse cx="570" cy="160" rx="500" ry="200" fill="rgba(26,80,200,0.04)"/>
+
+              <!-- Table header -->
+              <rect x="60" y="48" width="1020" height="36" rx="6" fill="rgba(26,104,255,0.05)" stroke="rgba(26,104,255,0.12)" stroke-width="1"/>
+              <!-- Checkbox col -->
+              <rect x="76" y="62" width="10" height="10" rx="2" fill="rgba(26,104,255,0.6)" stroke="rgba(26,104,255,0.8)" stroke-width="1"/>
+              <path d="M78 67 L80.5 69.5 L84 64" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- Header labels -->
+              <text x="104" y="72" fill="rgba(150,160,200,0.6)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">EXECUTION NAME</text>
+              <text x="340" y="72" fill="rgba(150,160,200,0.6)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">STATUS</text>
+              <text x="480" y="72" fill="rgba(150,160,200,0.6)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">STARTED</text>
+              <text x="640" y="72" fill="rgba(150,160,200,0.6)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">DURATION</text>
+              <text x="800" y="72" fill="rgba(150,160,200,0.6)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600" letter-spacing="0.06em">ACTIONS</text>
+
+              <!-- Row data -->
+              <!-- statuses: running(blue), error(red), success(green), paused(yellow), running, error -->
+              <!-- Col widths: checkbox@76, name@104, status@340, started@480, dur@640, actions@800 -->
+
+              <!-- ROW 1 — Running, SELECTED -->
+              <rect x="60" y="88" width="1020" height="34" rx="5" fill="rgba(26,104,255,0.07)" stroke="rgba(26,104,255,0.2)" stroke-width="1"/>
+              <rect x="76" y="97" width="10" height="10" rx="2" fill="rgba(26,104,255,0.8)" stroke="rgba(26,104,255,0.9)" stroke-width="1"/>
+              <path d="M78 102 L80.5 104.5 L84 99" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <text x="104" y="109" fill="rgba(200,210,255,0.85)" font-family="Space Grotesk, sans-serif" font-size="10">purchase-contract-agent_run_001</text>
+              <rect x="340" y="96" width="66" height="18" rx="9" fill="rgba(26,104,255,0.15)" stroke="rgba(26,104,255,0.3)" stroke-width="1"/>
+              <circle cx="354" cy="105" r="3.5" fill="#1A68FF"/>
+              <text x="360" y="109" fill="rgba(107,159,255,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Running</text>
+              <text x="480" y="109" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">09:44 AM</text>
+              <text x="640" y="109" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">2m 18s</text>
+              <rect x="800" y="96" width="52" height="18" rx="9" fill="rgba(255,50,50,0.1)" stroke="rgba(255,50,50,0.3)" stroke-width="1"/>
+              <text x="826" y="109" text-anchor="middle" fill="rgba(255,100,100,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Cancel</text>
+              <rect x="860" y="96" width="54" height="18" rx="9" fill="rgba(255,189,46,0.08)" stroke="rgba(255,189,46,0.25)" stroke-width="1"/>
+              <text x="887" y="109" text-anchor="middle" fill="rgba(255,189,46,0.8)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Suspend</text>
+
+              <!-- ROW 2 — Error -->
+              <rect x="60" y="126" width="1020" height="34" rx="5" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <rect x="76" y="135" width="10" height="10" rx="2" fill="transparent" stroke="rgba(100,100,140,0.4)" stroke-width="1"/>
+              <text x="104" y="147" fill="rgba(200,210,255,0.6)" font-family="Space Grotesk, sans-serif" font-size="10">invoice-processing-agent_run_047</text>
+              <rect x="340" y="134" width="54" height="18" rx="9" fill="rgba(255,50,50,0.1)" stroke="rgba(255,80,80,0.3)" stroke-width="1"/>
+              <circle cx="353" cy="143" r="3.5" fill="#FF4444"/>
+              <text x="359" y="147" fill="rgba(255,100,100,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Error</text>
+              <text x="480" y="147" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">09:31 AM</text>
+              <text x="640" y="147" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">0m 43s</text>
+              <rect x="800" y="134" width="44" height="18" rx="9" fill="rgba(26,104,255,0.1)" stroke="rgba(26,104,255,0.3)" stroke-width="1"/>
+              <text x="822" y="147" text-anchor="middle" fill="rgba(107,159,255,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Retry</text>
+
+              <!-- ROW 3 — Completed -->
+              <rect x="60" y="164" width="1020" height="34" rx="5" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <rect x="76" y="173" width="10" height="10" rx="2" fill="transparent" stroke="rgba(100,100,140,0.4)" stroke-width="1"/>
+              <text x="104" y="185" fill="rgba(200,210,255,0.6)" font-family="Space Grotesk, sans-serif" font-size="10">hr-onboarding-agent_run_012</text>
+              <rect x="340" y="172" width="76" height="18" rx="9" fill="rgba(39,201,63,0.08)" stroke="rgba(39,201,63,0.25)" stroke-width="1"/>
+              <circle cx="353" cy="181" r="3.5" fill="#27C93F"/>
+              <text x="359" y="185" fill="rgba(80,210,100,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Completed</text>
+              <text x="480" y="185" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">09:15 AM</text>
+              <text x="640" y="185" fill="rgba(150,160,200,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">5m 02s</text>
+              <text x="800" y="185" fill="rgba(100,110,150,0.4)" font-family="Space Grotesk, sans-serif" font-size="10">—</text>
+
+              <!-- ROW 4 — Suspended -->
+              <rect x="60" y="202" width="1020" height="34" rx="5" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <rect x="76" y="211" width="10" height="10" rx="2" fill="transparent" stroke="rgba(100,100,140,0.4)" stroke-width="1"/>
+              <text x="104" y="223" fill="rgba(200,210,255,0.5)" font-family="Space Grotesk, sans-serif" font-size="10">vendor-eval-agent_run_008</text>
+              <rect x="340" y="210" width="68" height="18" rx="9" fill="rgba(255,189,46,0.08)" stroke="rgba(255,189,46,0.25)" stroke-width="1"/>
+              <circle cx="353" cy="219" r="3.5" fill="#FFBD2E"/>
+              <text x="359" y="223" fill="rgba(255,210,80,0.9)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Suspended</text>
+              <text x="480" y="223" fill="rgba(150,160,200,0.4)" font-family="Space Grotesk, sans-serif" font-size="10">08:58 AM</text>
+              <text x="640" y="223" fill="rgba(150,160,200,0.4)" font-family="Space Grotesk, sans-serif" font-size="10">12m 34s</text>
+              <rect x="800" y="210" width="52" height="18" rx="9" fill="rgba(39,201,63,0.08)" stroke="rgba(39,201,63,0.25)" stroke-width="1"/>
+              <text x="826" y="223" text-anchor="middle" fill="rgba(80,210,100,0.8)" font-family="Space Grotesk, sans-serif" font-size="9" font-weight="600">Resume</text>
+
+              <!-- Mass action bar at top right (floating) -->
+              <rect x="700" y="52" width="380" height="24" rx="6" fill="rgba(26,104,255,0.15)" stroke="rgba(26,104,255,0.35)" stroke-width="1"/>
+              <text x="715" y="68" fill="rgba(107,159,255,0.95)" font-family="Space Grotesk, sans-serif" font-size="9.5" font-weight="600">3 selected  ·  Max 100 instances per action</text>
+              <rect x="970" y="55" width="48" height="18" rx="9" fill="rgba(255,50,50,0.2)" stroke="rgba(255,50,50,0.5)" stroke-width="1"/>
+              <text x="994" y="67" text-anchor="middle" fill="rgba(255,100,100,0.95)" font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700">Cancel All</text>
+
+              <!-- Bottom fade -->
+              <rect x="0" y="230" width="1140" height="90" fill="url(#grad-mon-fade)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- ── P3: Research ── -->
+        <div class="pcard research reveal d2">
+          <div class="p-body">
+            <div>
+              <div class="p-meta">
+                <span class="ptag">UX Research</span>
+                <span class="ptag">Usability Testing</span>
+                <span class="pnum">03</span>
+              </div>
+              <h3 class="p-title">Joule Studio Usability Testing</h3>
+              <p class="p-problem">The conversational interface was live — but was it actually working? We needed to understand how users naturally approached agent creation and whether the experience communicated the right things at the right moments.</p>
+              <div class="p-details" style="margin-top:20px">
+                <div class="p-row">
+                  <span class="p-key">Role</span>
+                  <span class="p-val">UX Designer / UX Research Specialist — test planning, user observation, synthesis, insight generation &amp; design recommendations</span>
+                </div>
+                <div class="p-row">
+                  <span class="p-key">Methods</span>
+                  <span class="p-val">Moderated usability sessions · Think-aloud protocol · Affinity mapping · Prioritized design recommendations</span>
+                </div>
+              </div>
+              <div class="p-outcome" style="margin-top:18px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="p-outcome-txt">Surfaced actionable insights that improved navigation patterns, conversational content clarity, and the overall agent-creation flow — closing the gap between design intent and user reality.</span>
+              </div>
+              <div class="stat-grid">
+                <div class="stt">
+                  <div class="stt-n">Real</div>
+                  <div class="stt-l">user observation sessions with live feedback</div>
+                </div>
+                <div class="stt">
+                  <div class="stt-n">3+</div>
+                  <div class="stt-l">key UX improvements identified &amp; actioned</div>
+                </div>
+                <div class="stt">
+                  <div class="stt-n">AI</div>
+                  <div class="stt-l">product tested at enterprise scale</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about">
+    <div class="wrap">
+      <div class="about-grid">
+
+        <div class="reveal">
+          <span class="s-label">About Me</span>
+          <blockquote class="about-quote">
+            "Great design makes<br><span class="hl">complexity feel simple</span> —<br>not invisible."
+          </blockquote>
+          <div class="about-body">
+            <p>I'm a UX Designer focused on creating meaningful experiences for complex enterprise products. My background in technical communication gives me an edge — I can read a 40-page system spec and translate it into an intuitive user journey.</p>
+            <p>At SAP, I work on AI-first experiences and enterprise workflows, exploring how conversational interfaces, automation, and thoughtful interaction design can reduce complexity for real users doing real work.</p>
+            <p>I'm driven by curiosity, problem-solving, and the belief that the best design decisions come from deeply understanding the system — not just the surface.</p>
+          </div>
+          <div class="about-facts">
+            <div class="afact">
+              <div class="afact-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <span>Based in India &nbsp;·&nbsp; Working at SAP</span>
+            </div>
+            <div class="afact">
+              <div class="afact-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+              <span>5 years of UX in enterprise software</span>
+            </div>
+            <div class="afact">
+              <div class="afact-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <span>Google UX Design Professional Certificate</span>
+            </div>
+            <div class="afact">
+              <div class="afact-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+              <span>Technical communication background → UX practice</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal d2">
+          <div class="about-photo">
+            <img src="assets/photo.jpg" alt="J Likithesh — UX Designer">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SKILLS ==================== -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="s-hdr reveal">
+        <span class="s-label">Skills &amp; Tools</span>
+        <h2 class="s-head">What I bring to the work</h2>
+      </div>
+      <div class="skills-bento">
+
+        <div class="sk-card reveal">
+          <div class="sk-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+          <div class="sk-title">UX Design</div>
+          <div class="pills">
+            <span class="pill">User Flows</span><span class="pill">Information Architecture</span><span class="pill">Interaction Design</span><span class="pill">Wireframing</span><span class="pill">Prototyping</span><span class="pill">Visual Design</span><span class="pill">Design Systems</span>
+          </div>
+        </div>
+
+        <div class="sk-card reveal d1">
+          <div class="sk-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="sk-title">UX Research</div>
+          <div class="pills">
+            <span class="pill">Usability Testing</span><span class="pill">User Observation</span><span class="pill">Insight Synthesis</span><span class="pill">Affinity Mapping</span><span class="pill">UX Writing</span>
+          </div>
+        </div>
+
+        <div class="sk-card reveal d2">
+          <div class="sk-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="sk-title">AI &amp; Conversational UX</div>
+          <div class="pills">
+            <span class="pill">AI-First UX</span><span class="pill">Conversational UX</span><span class="pill">Agent Design</span><span class="pill">Error States</span><span class="pill">Complex Workflows</span>
+          </div>
+        </div>
+
+        <div class="sk-card reveal d3">
+          <div class="sk-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="sk-title">Tools</div>
+          <div class="pills">
+            <span class="pill">Figma</span><span class="pill">FigJam</span><span class="pill">Maze</span><span class="pill">GitHub</span><span class="pill">HTML/CSS</span><span class="pill">DITA/XML</span><span class="pill">FX Kit</span>
+          </div>
+        </div>
+
+        <div class="cert-row reveal d1">
+          <a href="https://www.credly.com/badges/2a481396-186b-4948-b0d3-069617e72283/linked_in" target="_blank" rel="noopener" class="cert-card">
+            <div class="cert-ico">G</div>
+            <div class="cert-body">
+              <div class="cert-org">Google · Coursera</div>
+              <div class="cert-name">UX Design Professional Certificate</div>
+              <div class="cert-link-txt">View credential <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </div>
+            <svg class="cert-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="reveal">
+          <span class="s-label">Contact</span>
+          <h2 class="c-head">Let's build something great.</h2>
+          <p class="c-sub">Whether you have a project in mind, want to talk AI-first UX, or simply want to connect — I'd love to hear from you.</p>
+        </div>
+        <div class="c-items reveal d1">
+          <a href="mailto:likhiteshj19@gmail.com" class="c-item">
+            <div class="c-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div>
+              <div class="c-lbl">Email</div>
+              <div class="c-val">likhiteshj19@gmail.com</div>
+            </div>
+            <svg class="c-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="c-item">
+            <div class="c-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div>
+              <div class="c-lbl">LinkedIn</div>
+              <div class="c-val">linkedin.com/in/likhitesh1996</div>
+            </div>
+            <svg class="c-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-row">
+        <span class="foot-logo">JL<em>.</em></span>
+        <span class="foot-copy">© 2026 J Likithesh · UX Designer at SAP</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Custom cursor ──────────────────────────
+    const cd = document.getElementById('cd');
+    const cr = document.getElementById('cr');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cd.style.left = mx + 'px'; cd.style.top = my + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      cr.style.left = rx + 'px'; cr.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button, .pcard, .skill-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // ── Theme toggle ───────────────────────────
+    const html = document.documentElement;
+    const btn  = document.getElementById('themeBtn');
+    const moon = document.getElementById('i-moon');
+    const sun  = document.getElementById('i-sun');
+
+    function applyTheme(t) {
+      html.setAttribute('data-theme', t);
+      moon.style.display = t === 'dark' ? 'block' : 'none';
+      sun.style.display  = t === 'dark' ? 'none'  : 'block';
+    }
+    applyTheme(localStorage.getItem('jl-theme') || 'dark');
+    btn.addEventListener('click', () => {
+      const n = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('jl-theme', n); applyTheme(n);
+    });
+
+    // ── Nav sticky ─────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('stuck', window.scrollY > 30);
+    }, { passive: true });
+
+    // ── Scroll reveal ──────────────────────────
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ── Active nav links ───────────────────────
+    const secs  = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    const sObs  = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          links.forEach(a => { a.style.color = a.getAttribute('href') === `#${id}` ? 'var(--t1)' : ''; });
+        }
+      });
+    }, { threshold: 0.45 });
+    secs.forEach(s => sObs.observe(s));
+  </script>
+</body>
+</html>

@@ -283,9 +283,8 @@
     .photo-frame img {
       width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
-      transition: transform .5s var(--ease);
+      transition: transform .6s var(--ease), filter .4s;
     }
-    .photo-frame:hover img { transform: scale(1.025); }
 
     .floating-card {
       position: absolute; bottom: -20px; left: -20px;
@@ -570,6 +569,177 @@
     .d2 { transition-delay: .2s; }
     .d3 { transition-delay: .3s; }
 
+    /* =============================================
+       MARQUEE STRIP
+    ============================================= */
+    .marquee-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 13px 0; overflow: hidden;
+      background: var(--bg-2);
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee-scroll 34s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 0 28px;
+      font-family: var(--f-display);
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .1em; color: var(--t3);
+      flex-shrink: 0;
+    }
+    .marquee-item em { color: var(--accent); font-style: normal; }
+    .m-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--t3); flex-shrink: 0; }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* =============================================
+       SECTION GHOST NUMBER
+    ============================================= */
+    .s-ghost {
+      font-family: var(--f-display);
+      font-size: clamp(80px, 12vw, 140px);
+      font-weight: 700; letter-spacing: -0.05em;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--border);
+      line-height: 1; display: block;
+      user-select: none; margin-bottom: -24px;
+    }
+
+    /* =============================================
+       HERO STATS ROW
+    ============================================= */
+    .hero-stats {
+      display: flex; align-items: center; gap: 28px;
+      margin-top: 36px; padding-top: 32px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .h-stat-n {
+      font-family: var(--f-display);
+      font-size: 26px; font-weight: 700; line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .h-stat-l { font-size: 11px; color: var(--t3); margin-top: 3px; font-weight: 500; }
+    .h-stat-sep { width: 1px; height: 28px; background: var(--border); }
+
+    /* =============================================
+       PROCESS STRIP
+    ============================================= */
+    .process-strip {
+      display: flex; align-items: flex-start;
+      margin-top: 60px; position: relative;
+    }
+    .process-strip::before {
+      content: '';
+      position: absolute; top: 16px; left: 6px; right: 0;
+      height: 1px; background: var(--border);
+    }
+    .p-step { flex: 1; padding-top: 36px; position: relative; padding-right: 16px; }
+    .p-step-dot {
+      position: absolute; top: 10px; left: 0;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--bg-2); border: 2px solid var(--t3);
+      transition: border-color .3s, background .3s, box-shadow .3s;
+    }
+    .p-step:hover .p-step-dot {
+      border-color: var(--accent); background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+    }
+    .p-step-n { font-size: 9.5px; font-weight: 700; color: var(--t3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 5px; }
+    .p-step-t { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--t1); margin-bottom: 4px; }
+    .p-step-d { font-size: 12px; color: var(--t3); line-height: 1.55; }
+    @media (max-width: 760px) {
+      .process-strip { flex-direction: column; gap: 22px; }
+      .process-strip::before { display: none; }
+      .p-step { padding-top: 0; }
+      .p-step-dot { display: none; }
+    }
+
+    /* =============================================
+       PROJECT ACCENT BAR
+    ============================================= */
+    .p-accent-bar { height: 3px; }
+    .p-accent-bar.c-blue   { background: linear-gradient(90deg, #1A68FF 0%, rgba(107,71,255,0.5) 55%, transparent 100%); }
+    .p-accent-bar.c-purple { background: linear-gradient(90deg, #7C3AED 0%, rgba(192,132,252,0.4) 55%, transparent 100%); }
+    .p-accent-bar.c-teal   { background: linear-gradient(90deg, #0D9488 0%, rgba(52,211,153,0.35) 55%, transparent 100%); }
+
+    /* Project num pill */
+    .pnum {
+      font-family: var(--f-display);
+      font-size: 10.5px; font-weight: 700; letter-spacing: .06em;
+      color: var(--t3); margin-left: auto;
+      background: var(--bg-3); border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 100px;
+    }
+
+    /* =============================================
+       ABOUT EDITORIAL
+    ============================================= */
+    .about-quote-wrap {
+      padding-left: 22px;
+      border-left: 2px solid var(--accent);
+      margin-bottom: 30px;
+    }
+    .about-quote {
+      font-family: var(--f-display);
+      font-size: clamp(20px, 2.5vw, 32px);
+      font-weight: 700; line-height: 1.26;
+      letter-spacing: -0.02em;
+    }
+    .about-quote .hl { color: var(--accent); }
+    .about-q-attr {
+      font-size: 11.5px; color: var(--t3); margin-top: 10px;
+      font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    }
+
+    /* =============================================
+       PHOTO HOVER
+    ============================================= */
+    .photo-frame::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 45%; pointer-events: none;
+      background: linear-gradient(to top, rgba(8,8,15,0.55), transparent);
+      border-radius: 0 0 28px 28px;
+    }
+    .photo-frame:hover img { transform: scale(1.04); filter: brightness(1.06); }
+
+    /* =============================================
+       FOOTER EDITORIAL
+    ============================================= */
+    footer {
+      padding: 0; border-top: 1px solid var(--border); background: var(--bg);
+      overflow: hidden;
+    }
+    .foot-big {
+      font-family: var(--f-display);
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 700; letter-spacing: -0.04em;
+      color: transparent; -webkit-text-stroke: 1px var(--border);
+      line-height: 0.9; padding: 28px 0 18px;
+      user-select: none; transition: -webkit-text-stroke-color .3s;
+    }
+    footer:hover .foot-big { -webkit-text-stroke-color: var(--border-h); }
+    .foot-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0 28px; border-top: 1px solid var(--border);
+      flex-wrap: wrap; gap: 10px;
+    }
+    .foot-logo { font-family: var(--f-display); font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+    .foot-logo em { color: var(--accent); font-style: normal; }
+    .foot-copy { font-size: 12.5px; color: var(--t3); }
+    .foot-up {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600; color: var(--t3); transition: color .2s;
+    }
+    .foot-up:hover { color: var(--t1); }
+
   </style>
 </head>
 <body>
@@ -628,7 +798,22 @@
             </a>
             <a href="#contact" class="btn-ghost">Get in Touch</a>
           </div>
-          <div class="hero-social">
+          <div class="hero-stats">
+            <div class="h-stat">
+              <div class="h-stat-n">5+</div>
+              <div class="h-stat-l">Years at SAP</div>
+            </div>
+            <div class="h-stat-sep"></div>
+            <div class="h-stat">
+              <div class="h-stat-n">3</div>
+              <div class="h-stat-l">AI Products Shaped</div>
+            </div>
+            <div class="h-stat-sep"></div>
+            <div class="h-stat">
+              <div class="h-stat-n">∞</div>
+              <div class="h-stat-l">Problems to Solve</div>
+            </div>
+          </div>
             <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="s-link">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
               LinkedIn
@@ -656,20 +841,85 @@
     </div>
   </section>
 
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item">UX Design <span class="m-sep"></span></span>
+      <span class="marquee-item">AI-First Experiences <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>SAP Joule Studio</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">User Research <span class="m-sep"></span></span>
+      <span class="marquee-item">Interaction Design <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Enterprise UX</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">Information Architecture <span class="m-sep"></span></span>
+      <span class="marquee-item">Figma <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Conversational UX</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">Design Systems <span class="m-sep"></span></span>
+      <span class="marquee-item">Usability Testing <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Complexity → Simplicity</em> <span class="m-sep"></span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">UX Design <span class="m-sep"></span></span>
+      <span class="marquee-item">AI-First Experiences <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>SAP Joule Studio</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">User Research <span class="m-sep"></span></span>
+      <span class="marquee-item">Interaction Design <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Enterprise UX</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">Information Architecture <span class="m-sep"></span></span>
+      <span class="marquee-item">Figma <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Conversational UX</em> <span class="m-sep"></span></span>
+      <span class="marquee-item">Design Systems <span class="m-sep"></span></span>
+      <span class="marquee-item">Usability Testing <span class="m-sep"></span></span>
+      <span class="marquee-item"><em>Complexity → Simplicity</em> <span class="m-sep"></span></span>
+    </div>
+  </div>
+
   <!-- ==================== WORK ==================== -->
   <section id="work">
     <div class="wrap">
 
       <div class="s-hdr reveal">
+        <span class="s-ghost">01</span>
         <span class="s-label">Selected Work</span>
         <h2 class="s-head">Designing for complexity<br>at enterprise scale</h2>
         <p class="s-sub">Three projects that shaped AI-first experiences for enterprise users at SAP.</p>
+        <div class="process-strip">
+          <div class="p-step">
+            <span class="p-step-dot"></span>
+            <div class="p-step-n">01</div>
+            <div class="p-step-t">Research</div>
+            <div class="p-step-d">Understand the system and the human</div>
+          </div>
+          <div class="p-step">
+            <span class="p-step-dot"></span>
+            <div class="p-step-n">02</div>
+            <div class="p-step-t">Define</div>
+            <div class="p-step-d">Frame the real problem, not just the ask</div>
+          </div>
+          <div class="p-step">
+            <span class="p-step-dot"></span>
+            <div class="p-step-n">03</div>
+            <div class="p-step-t">Design</div>
+            <div class="p-step-d">Explore, prototype, iterate</div>
+          </div>
+          <div class="p-step">
+            <span class="p-step-dot"></span>
+            <div class="p-step-n">04</div>
+            <div class="p-step-t">Validate</div>
+            <div class="p-step-d">Test with real users, refine</div>
+          </div>
+          <div class="p-step">
+            <span class="p-step-dot"></span>
+            <div class="p-step-n">05</div>
+            <div class="p-step-t">Ship</div>
+            <div class="p-step-d">Deliver and learn from the wild</div>
+          </div>
+        </div>
       </div>
 
       <div class="project-list">
 
         <!-- ── P1: Migration ── -->
         <div class="pcard reveal">
+          <div class="p-accent-bar c-blue"></div>
           <div class="p-body">
             <div>
               <div class="p-meta">
@@ -780,6 +1030,7 @@
 
         <!-- ── P2: Monitoring ── -->
         <div class="pcard reveal d1">
+          <div class="p-accent-bar c-purple"></div>
           <div class="p-body">
             <div>
               <div class="p-meta">
@@ -909,6 +1160,7 @@
 
         <!-- ── P3: Research ── -->
         <div class="pcard research reveal d2">
+          <div class="p-accent-bar c-teal"></div>
           <div class="p-body">
             <div>
               <div class="p-meta">
@@ -960,10 +1212,14 @@
       <div class="about-grid">
 
         <div class="reveal">
+          <span class="s-ghost">02</span>
           <span class="s-label">About Me</span>
-          <blockquote class="about-quote">
-            "Great design makes<br><span class="hl">complexity feel simple</span> —<br>not invisible."
-          </blockquote>
+          <div class="about-quote-wrap">
+            <blockquote class="about-quote">
+              "Great design makes<br><span class="hl">complexity feel simple</span> —<br>not invisible."
+            </blockquote>
+            <div class="about-q-attr">— J Likithesh · UX Designer</div>
+          </div>
           <div class="about-body">
             <p>I'm a UX Designer focused on creating meaningful experiences for complex enterprise products. My background in technical communication gives me an edge — I can read a 40-page system spec and translate it into an intuitive user journey.</p>
             <p>At SAP, I work on AI-first experiences and enterprise workflows, exploring how conversational interfaces, automation, and thoughtful interaction design can reduce complexity for real users doing real work.</p>
@@ -1003,6 +1259,7 @@
   <section id="skills">
     <div class="wrap">
       <div class="s-hdr reveal">
+        <span class="s-ghost">03</span>
         <span class="s-label">Skills &amp; Tools</span>
         <h2 class="s-head">What I bring to the work</h2>
       </div>
@@ -1090,9 +1347,14 @@
   <!-- ==================== FOOTER ==================== -->
   <footer>
     <div class="wrap">
-      <div class="foot-row">
+      <div class="foot-big">Let's work together.</div>
+      <div class="foot-bottom">
         <span class="foot-logo">JL<em>.</em></span>
         <span class="foot-copy">© 2026 J Likithesh · UX Designer at SAP</span>
+        <a href="#hero" class="foot-up">
+          Back to top
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        </a>
       </div>
     </div>
   </footer>

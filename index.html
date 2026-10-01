@@ -266,8 +266,8 @@ section{padding:100px 0}
 .pc-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ac);transition:gap .18s}
 .pc-cta:hover{gap:10px}
 
-/* screen col — fills 100% height */
-.pc-screen{overflow:hidden;position:relative;align-self:stretch}
+/* screen col — aspect-locked, SVG shows in full */
+.pc-screen{overflow:hidden;position:relative;aspect-ratio:3/2;background:#060614}
 .pc-screen svg{display:block;width:100%;height:100%;position:absolute;inset:0}
 
 /* p3 stats */
@@ -495,7 +495,7 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
 
         <!-- Joule Studio Migration — dark abstract concept -->
         <div class="pc-screen">
-          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
             <defs>
               <pattern id="dg" width="28" height="28" patternUnits="userSpaceOnUse">
                 <circle cx="1" cy="1" r=".9" fill="rgba(255,255,255,.05)"/>
@@ -619,122 +619,132 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
           <a href="https://www.figma.com/design/RmsqAx2GKv6cmGFBlnkaPo/" target="_blank" rel="noopener" class="pc-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         </div>
 
-        <!-- SAP Build Process Monitor — close to real screenshot -->
+        <!-- Mass Actions — dark abstract concept, purple accent -->
         <div class="pc-screen">
-          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-            <rect width="720" height="480" fill="#F5F5F8"/>
-            <!-- SAP header -->
-            <rect width="720" height="44" fill="#1C1C1C"/>
-            <rect x="10" y="10" width="24" height="24" rx="2" fill="#F0AB00"/>
-            <text x="15" y="26" fill="white" font-family="Arial,sans-serif" font-size="10" font-weight="900">SAP</text>
-            <text x="40" y="27" fill="white" font-family="Arial,sans-serif" font-size="13" font-weight="600">Build</text>
-            <circle cx="680" cy="22" r="12" fill="#3A3A3A"/>
-            <text x="680" y="27" text-anchor="middle" fill="#AAA" font-family="Arial,sans-serif" font-size="10">JL</text>
-            <!-- sidebar -->
-            <rect x="0" y="44" width="194" height="436" fill="white" stroke="#E8E8EC" stroke-width="1"/>
-            <text x="22" y="76" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Lobby</text>
-            <text x="22" y="102" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Connectors</text>
-            <text x="22" y="128" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Store</text>
-            <!-- Monitoring active -->
-            <rect x="8" y="136" width="178" height="28" rx="5" fill="#EFF6FF"/>
-            <circle cx="183" cy="150" r="4" fill="#2171FF"/>
-            <text x="22" y="154" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">Monitoring</text>
-            <text x="22" y="180" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Control Tower</text>
-            <!-- sub items under Monitoring -->
-            <rect x="22" y="190" width="1.5" height="48" fill="#E2E8F0"/>
-            <text x="34" y="208" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="10.5">Process Monitor</text>
-            <rect x="30" y="214" width="160" height="22" rx="5" fill="#EFF6FF"/>
-            <text x="40" y="229" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Process and Workflow</text>
-            <!-- main content -->
-            <!-- breadcrumb -->
-            <text x="210" y="62" fill="#2171FF" font-family="-apple-system,sans-serif" font-size="11">Monitor</text>
-            <text x="256" y="62" fill="#64748B" font-family="-apple-system,sans-serif" font-size="11"> / Process and Workflow Instances</text>
-            <!-- page title -->
-            <text x="210" y="84" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="15" font-weight="700">Process and Workflow Instances</text>
-            <!-- tabs -->
-            <rect x="210" y="92" width="68" height="26" rx="5" fill="#EFF6FF"/>
-            <text x="244" y="109" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Process</text>
-            <text x="296" y="109" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Guided Process</text>
-            <!-- filters -->
-            <rect x="210" y="124" width="220" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="222" y="140" fill="#CBD5E1" font-family="-apple-system,sans-serif" font-size="10">Search for instances…</text>
-            <rect x="438" y="124" width="130" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="449" y="140" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Status</text>
-            <text x="558" y="140" fill="#CBD5E1" font-family="-apple-system,sans-serif" font-size="9">▼</text>
-            <rect x="576" y="124" width="118" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="587" y="140" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Project</text>
-            <!-- items bar -->
-            <text x="210" y="168" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Items (Selected: 1 of 1830)</text>
-            <!-- Actions button -->
-            <rect x="616" y="156" width="70" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="651" y="172" text-anchor="middle" fill="#334155" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Actions ▾</text>
-            <!-- Actions dropdown -->
-            <rect x="618" y="182" width="86" height="68" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1" filter="url(#ds)"/>
-            <defs><filter id="ds" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#00000022"/></filter></defs>
-            <text x="633" y="200" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Retry</text>
-            <rect x="618" y="206" width="86" height="1" fill="#F1F5F9"/>
-            <text x="633" y="222" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Suspend</text>
-            <rect x="618" y="228" width="86" height="1" fill="#F1F5F9"/>
-            <text x="633" y="244" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Cancel</text>
-            <!-- table header -->
-            <rect x="210" y="177" width="400" height="22" rx="3" fill="#F8FAFC"/>
-            <rect x="210" y="177" width="400" height="1" fill="#E2E8F0"/>
-            <rect x="210" y="198" width="400" height="1" fill="#E2E8F0"/>
-            <rect x="222" y="184" width="8" height="8" rx="1.5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="244" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">TYPE</text>
-            <text x="278" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">NAME</text>
-            <text x="388" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">STATUS</text>
-            <text x="460" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">STARTED ON</text>
-            <!-- Row 1 — selected, Running -->
-            <rect x="210" y="199" width="400" height="26" fill="#EFF6FF"/>
-            <rect x="210" y="224" width="400" height="1" fill="#E2E8F0"/>
-            <rect x="222" y="207" width="8" height="8" rx="1.5" fill="#2171FF"/>
-            <path d="M223.5 211 L226 213.5 L230 208" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <!-- >>> icon -->
-            <text x="244" y="216" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
-            <text x="278" y="216" fill="#1E293B" font-family="-apple-system,sans-serif" font-size="10" font-weight="500">Manage Billing Block A</text>
-            <rect x="388" y="204" width="48" height="16" rx="8" fill="#DBEAFE"/>
-            <text x="412" y="216" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Running</text>
-            <text x="460" y="216" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
-            <!-- Row 2 — Error -->
-            <rect x="210" y="225" width="400" height="26" fill="white"/>
-            <rect x="210" y="250" width="400" height="1" fill="#F1F5F9"/>
-            <rect x="222" y="233" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
-            <text x="244" y="242" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
-            <text x="278" y="242" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">Usecase 1</text>
-            <rect x="388" y="230" width="38" height="16" rx="8" fill="#FEE2E2"/>
-            <text x="407" y="242" text-anchor="middle" fill="#991B1B" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Error</text>
-            <text x="460" y="242" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
-            <!-- Row 3 — On Hold -->
-            <rect x="210" y="251" width="400" height="26" fill="white"/>
-            <rect x="210" y="276" width="400" height="1" fill="#F1F5F9"/>
-            <rect x="222" y="259" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
-            <text x="244" y="268" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
-            <text x="278" y="268" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">Usecase 3</text>
-            <rect x="388" y="256" width="48" height="16" rx="8" fill="#FEF9C3"/>
-            <text x="412" y="268" text-anchor="middle" fill="#854D0E" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">On Hold</text>
-            <text x="460" y="268" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
-            <!-- Row 4 — Completed -->
-            <rect x="210" y="277" width="400" height="26" fill="white"/>
-            <rect x="210" y="302" width="400" height="1" fill="#F1F5F9"/>
-            <rect x="222" y="285" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
-            <text x="244" y="294" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
-            <text x="278" y="294" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">test process</text>
-            <rect x="388" y="282" width="60" height="16" rx="8" fill="#DCFCE7"/>
-            <text x="418" y="294" text-anchor="middle" fill="#166534" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Completed</text>
-            <text x="460" y="294" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
-            <!-- Row 5 Running -->
-            <rect x="210" y="303" width="400" height="26" fill="white"/>
-            <rect x="210" y="328" width="400" height="1" fill="#F1F5F9"/>
-            <rect x="222" y="311" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
-            <text x="244" y="320" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
-            <text x="278" y="320" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">test process field validation</text>
-            <rect x="388" y="308" width="48" height="16" rx="8" fill="#DBEAFE"/>
-            <text x="412" y="320" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Running</text>
-            <text x="460" y="320" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
-            <!-- fade out at bottom -->
-            <defs><linearGradient id="fg2" x1="0" y1="0" x2="0" y2="1"><stop offset="60%" stop-color="#F5F5F8" stop-opacity="0"/><stop offset="100%" stop-color="#F5F5F8"/></linearGradient></defs>
-            <rect x="0" y="350" width="720" height="130" fill="url(#fg2)"/>
+          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <pattern id="dg2" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r=".9" fill="rgba(255,255,255,.05)"/>
+              </pattern>
+              <radialGradient id="pg1" cx="25%" cy="50%" r="50%"><stop offset="0%" stop-color="#4C1D95" stop-opacity=".35"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <radialGradient id="pg2" cx="75%" cy="50%" r="50%"><stop offset="0%" stop-color="#7C3AED" stop-opacity=".2"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <radialGradient id="pg3" cx="50%" cy="50%" r="30%"><stop offset="0%" stop-color="#7C3AED" stop-opacity=".07"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <marker id="mp1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="rgba(167,113,255,.5)" stroke-width="1.2" stroke-linecap="round"/>
+              </marker>
+              <marker id="mp2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="rgba(124,58,237,.85)" stroke-width="1.4" stroke-linecap="round"/>
+              </marker>
+              <marker id="mp3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M1 1 L4.5 3 L1 5" fill="none" stroke="rgba(16,185,129,.7)" stroke-width="1.2" stroke-linecap="round"/>
+              </marker>
+              <marker id="mp4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M1 1 L4.5 3 L1 5" fill="none" stroke="rgba(245,158,11,.7)" stroke-width="1.2" stroke-linecap="round"/>
+              </marker>
+              <marker id="mp5" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M1 1 L4.5 3 L1 5" fill="none" stroke="rgba(239,68,68,.7)" stroke-width="1.2" stroke-linecap="round"/>
+              </marker>
+            </defs>
+            <!-- Background -->
+            <rect width="720" height="480" fill="#060614"/>
+            <rect width="720" height="480" fill="url(#dg2)"/>
+            <rect width="720" height="480" fill="url(#pg1)"/>
+            <rect width="720" height="480" fill="url(#pg2)"/>
+            <rect width="720" height="480" fill="url(#pg3)"/>
+
+            <!-- ─ LEFT CARD: Selected Instances ─ -->
+            <rect x="44" y="72" width="200" height="258" rx="14" fill="rgba(25,18,55,.92)" stroke="rgba(120,80,220,.25)" stroke-width="1"/>
+            <rect x="44" y="72" width="200" height="3" rx="1" fill="rgba(120,90,230,.55)"/>
+            <text x="64" y="114" fill="rgba(170,145,255,.55)" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" letter-spacing=".18em">SELECTED</text>
+            <text x="62" y="161" fill="rgba(210,195,255,.9)" font-family="-apple-system,sans-serif" font-size="42" font-weight="800">150</text>
+
+            <!-- selection badge -->
+            <rect x="62" y="174" width="92" height="22" rx="11" fill="rgba(124,58,237,.15)" stroke="rgba(124,58,237,.38)" stroke-width="1"/>
+            <rect x="76" y="181" width="10" height="10" rx="2" fill="#7C3AED"/>
+            <path d="M77.5 186 L80 188.5 L84 183" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <text x="92" y="189" fill="rgba(196,167,255,.9)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">1 of 1830</text>
+
+            <!-- status breakdown -->
+            <text x="62" y="216" fill="rgba(150,130,210,.32)" font-family="-apple-system,sans-serif" font-size="8.5">Status breakdown</text>
+            <!-- Running row -->
+            <circle cx="70" cy="230" r="4" fill="#3B82F6"/>
+            <text x="80" y="234" fill="rgba(150,130,210,.65)" font-family="-apple-system,sans-serif" font-size="10">Running</text>
+            <rect x="140" y="225" width="80" height="5" rx="2.5" fill="rgba(255,255,255,.06)"/>
+            <rect x="140" y="225" width="48" height="5" rx="2.5" fill="rgba(59,130,246,.55)"/>
+            <text x="227" y="232" fill="rgba(150,130,210,.45)" font-family="-apple-system,sans-serif" font-size="8.5">67</text>
+            <!-- Error row -->
+            <circle cx="70" cy="248" r="4" fill="#EF4444"/>
+            <text x="80" y="252" fill="rgba(150,130,210,.65)" font-family="-apple-system,sans-serif" font-size="10">Error</text>
+            <rect x="140" y="243" width="80" height="5" rx="2.5" fill="rgba(255,255,255,.06)"/>
+            <rect x="140" y="243" width="37" height="5" rx="2.5" fill="rgba(239,68,68,.55)"/>
+            <text x="227" y="250" fill="rgba(150,130,210,.45)" font-family="-apple-system,sans-serif" font-size="8.5">45</text>
+            <!-- On Hold row -->
+            <circle cx="70" cy="266" r="4" fill="#F59E0B"/>
+            <text x="80" y="270" fill="rgba(150,130,210,.65)" font-family="-apple-system,sans-serif" font-size="10">On Hold</text>
+            <rect x="140" y="261" width="80" height="5" rx="2.5" fill="rgba(255,255,255,.06)"/>
+            <rect x="140" y="261" width="30" height="5" rx="2.5" fill="rgba(245,158,11,.55)"/>
+            <text x="227" y="268" fill="rgba(150,130,210,.45)" font-family="-apple-system,sans-serif" font-size="8.5">38</text>
+
+            <text x="62" y="296" fill="rgba(150,130,210,.32)" font-family="-apple-system,sans-serif" font-size="9">1830 total instances</text>
+            <text x="62" y="312" fill="rgba(150,130,210,.25)" font-family="-apple-system,sans-serif" font-size="9">SAP Build · Dec 6, 5:33 PM</text>
+
+            <!-- Multiple arrows: instances → BULK ACTION hub -->
+            <path d="M247 175 Q295 165 320 198" stroke="rgba(150,110,255,.4)" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#mp1)"/>
+            <path d="M247 198 Q290 198 320 205" stroke="rgba(150,110,255,.5)" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#mp1)"/>
+            <path d="M247 220 Q295 230 320 212" stroke="rgba(150,110,255,.35)" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#mp1)"/>
+
+            <!-- ─ CENTER: BULK ACTION ─ -->
+            <circle cx="360" cy="202" r="78" fill="none" stroke="rgba(124,58,237,.1)" stroke-width="1" stroke-dasharray="6 5"/>
+            <circle cx="360" cy="202" r="56" fill="none" stroke="rgba(124,58,237,.22)" stroke-width="1.2" stroke-dasharray="4 4"/>
+            <circle cx="360" cy="202" r="40" fill="rgba(124,58,237,.1)" stroke="rgba(124,58,237,.5)" stroke-width="1.5"/>
+            <circle cx="360" cy="202" r="28" fill="rgba(124,58,237,.15)"/>
+            <text x="360" y="196" text-anchor="middle" fill="rgba(196,167,255,.9)" font-family="-apple-system,sans-serif" font-size="12" font-weight="700">BULK</text>
+            <text x="360" y="213" text-anchor="middle" fill="rgba(167,113,255,.6)" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="700" letter-spacing=".1em">ACTION</text>
+
+            <!-- ─ RIGHT CARD: Action Results ─ -->
+            <rect x="476" y="72" width="200" height="258" rx="14" fill="rgba(20,12,52,.95)" stroke="rgba(124,58,237,.42)" stroke-width="1"/>
+            <rect x="476" y="72" width="200" height="3" rx="1" fill="#7C3AED"/>
+            <rect x="477" y="73" width="198" height="256" rx="13" fill="none" stroke="rgba(124,58,237,.06)" stroke-width="8"/>
+            <text x="496" y="114" fill="rgba(170,130,255,.65)" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" letter-spacing=".18em">ACTIONS</text>
+            <text x="494" y="157" fill="rgba(196,167,255,.95)" font-family="-apple-system,sans-serif" font-size="34" font-weight="800">Apply</text>
+
+            <!-- Retry row -->
+            <rect x="496" y="168" width="156" height="30" rx="8" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.28)" stroke-width="1"/>
+            <circle cx="512" cy="183" r="5" fill="#10B981"/>
+            <text x="522" y="187" fill="rgba(52,211,153,.88)" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Retry</text>
+            <text x="630" y="187" text-anchor="middle" fill="rgba(52,211,153,.55)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="700">45</text>
+            <!-- Suspend row -->
+            <rect x="496" y="205" width="156" height="30" rx="8" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.28)" stroke-width="1"/>
+            <circle cx="512" cy="220" r="5" fill="#F59E0B"/>
+            <text x="522" y="224" fill="rgba(252,211,77,.88)" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Suspend</text>
+            <text x="630" y="224" text-anchor="middle" fill="rgba(252,211,77,.55)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="700">38</text>
+            <!-- Cancel row -->
+            <rect x="496" y="242" width="156" height="30" rx="8" fill="rgba(239,68,68,.1)" stroke="rgba(239,68,68,.28)" stroke-width="1"/>
+            <circle cx="512" cy="257" r="5" fill="#EF4444"/>
+            <text x="522" y="261" fill="rgba(252,165,165,.88)" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Cancel</text>
+            <text x="630" y="261" text-anchor="middle" fill="rgba(252,165,165,.55)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="700">67</text>
+
+            <text x="496" y="295" fill="rgba(150,120,210,.38)" font-family="-apple-system,sans-serif" font-size="9">Applied to 150 instances</text>
+            <text x="496" y="311" fill="rgba(150,120,210,.28)" font-family="-apple-system,sans-serif" font-size="9">API limit: 100/batch · 2 batches</text>
+
+            <!-- Arrows: hub → action results (3 colored arrows) -->
+            <path d="M401 190 Q435 180 476 183" stroke="rgba(16,185,129,.65)" stroke-width="1.6" fill="none" marker-end="url(#mp3)"/>
+            <path d="M401 202 Q438 202 476 220" stroke="rgba(245,158,11,.65)" stroke-width="1.6" fill="none" marker-end="url(#mp4)"/>
+            <path d="M401 215 Q435 228 476 257" stroke="rgba(239,68,68,.65)" stroke-width="1.6" fill="none" marker-end="url(#mp5)"/>
+
+            <!-- ─ STEP PROGRESS BAR ─ -->
+            <rect x="44" y="368" width="92" height="28" rx="14" fill="rgba(16,185,129,.13)" stroke="rgba(16,185,129,.28)" stroke-width="1"/>
+            <circle cx="63" cy="382" r="5" fill="#10B981"/>
+            <text x="72" y="386" fill="rgba(52,211,153,.88)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Select</text>
+            <rect x="144" y="368" width="118" height="28" rx="14" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
+            <circle cx="163" cy="382" r="5" fill="#34D399"/>
+            <text x="172" y="386" fill="rgba(52,211,153,.75)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Set Action</text>
+            <rect x="270" y="368" width="100" height="28" rx="14" fill="rgba(245,158,11,.15)" stroke="rgba(245,158,11,.4)" stroke-width="1"/>
+            <circle cx="289" cy="382" r="5" fill="#F59E0B"/>
+            <text x="298" y="386" fill="rgba(252,211,77,.9)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Confirm</text>
+            <rect x="378" y="368" width="100" height="28" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.09)" stroke-width="1"/>
+            <circle cx="396" cy="382" r="5" fill="rgba(255,255,255,.18)"/>
+            <text x="406" y="386" fill="rgba(255,255,255,.28)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Complete</text>
           </svg>
         </div>
       </div>

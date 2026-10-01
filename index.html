@@ -3,584 +3,730 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J Likithesh — UX Designer</title>
+<title>J Likithesh — UX Designer at SAP</title>
+<meta name="description" content="J Likithesh — UX Designer at SAP. 5 years designing AI-first enterprise experiences.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ─── TOKENS ─────────────────────────────────── */
 :root{--e:cubic-bezier(.16,1,.3,1);--fd:'Space Grotesk',sans-serif;--fb:'DM Sans',sans-serif}
-[data-theme=dark]{--bg:#080810;--bg2:#0C0C18;--bg3:#10101F;--bd:rgba(255,255,255,.055);--bdh:rgba(255,255,255,.12);--t1:#EDEEFF;--t2:#5E5E7A;--t3:#28283C;--ac:#1A68FF;--ach:#3D7EFF;--ag:rgba(26,104,255,.1);--ab:rgba(26,104,255,.22);--nav:rgba(8,8,16,.92)}
-[data-theme=light]{--bg:#F2F2F8;--bg2:#FFFFFF;--bg3:#EBEBF5;--bd:rgba(0,0,0,.07);--bdh:rgba(0,0,0,.14);--t1:#080816;--t2:#50506A;--t3:#ABABC4;--ac:#1A68FF;--ach:#0A52E8;--ag:rgba(26,104,255,.07);--ab:rgba(26,104,255,.18);--nav:rgba(242,242,248,.94)}
+[data-theme=dark]{
+  --bg:#08080E;--bg2:#0C0C16;--bg3:#10101C;
+  --s1:rgba(255,255,255,.9);--s2:rgba(255,255,255,.38);--s3:rgba(255,255,255,.12);--s4:rgba(255,255,255,.05);
+  --bd:rgba(255,255,255,.07);--bdh:rgba(255,255,255,.14);
+  --ac:#2171FF;--ach:#4585FF;--ag:rgba(33,113,255,.1);--ab:rgba(33,113,255,.22);
+  --nav:rgba(8,8,14,.92);
+}
+[data-theme=light]{
+  --bg:#F0F0F8;--bg2:#FFFFFF;--bg3:#E8E8F2;
+  --s1:rgba(0,0,0,.86);--s2:rgba(0,0,0,.44);--s3:rgba(0,0,0,.16);--s4:rgba(0,0,0,.04);
+  --bd:rgba(0,0,0,.08);--bdh:rgba(0,0,0,.16);
+  --ac:#1A68FF;--ach:#0A52E8;--ag:rgba(26,104,255,.07);--ab:rgba(26,104,255,.16);
+  --nav:rgba(240,240,248,.94);
+}
 
+/* ─── RESET ──────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--fb);background:var(--bg);color:var(--t1);overflow-x:hidden;cursor:none;transition:background .3s,color .3s}
+body{font-family:var(--fb);background:var(--bg);color:var(--s1);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--ab)}
 ::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-thumb{background:var(--t3)}
+::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 
-/* ── Cursor ─ */
-#cd,#cr{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition-property:width,height,border-color}
-#cd{width:7px;height:7px;background:var(--ac);transition-duration:.08s}
-#cr{width:30px;height:30px;border:1px solid rgba(26,104,255,.4);transition-duration:.22s,.22s,.2s;transition-timing-function:var(--e)}
-body.ch #cr{width:54px;height:54px;border-color:rgba(26,104,255,.16)}
-body.ch #cd{transform:translate(-50%,-50%) scale(0)}
+/* ─── CURSOR ─────────────────────────────────── */
+#_d,#_r{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#_d{width:6px;height:6px;background:var(--ac);transition:transform .1s,opacity .2s}
+#_r{width:28px;height:28px;border:1.5px solid rgba(33,113,255,.35);transition:width .25s var(--e),height .25s var(--e),border-color .2s}
+body.hov #_r{width:50px;height:50px;border-color:rgba(33,113,255,.18)}
+body.hov #_d{transform:translate(-50%,-50%) scale(.4)}
 
-/* ── Top bar ─ */
-#bar{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:22px 52px;transition:padding .3s var(--e),background .3s,border-color .3s}
-#bar.stuck{padding:13px 52px;background:var(--nav);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid var(--bd)}
-.bar-logo{font-family:var(--fd);font-size:17px;font-weight:700;letter-spacing:-.03em;z-index:600}
-.bar-logo span{color:var(--ac)}
-.bar-r{display:flex;align-items:center;gap:10px;z-index:600}
-.bar-theme{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--bd);background:none;color:var(--t2);cursor:none;transition:all .2s}
-.bar-theme:hover{border-color:var(--bdh);color:var(--t1);background:var(--ag)}
-/* hamburger */
-.bar-menu{width:42px;height:42px;border-radius:50%;border:1px solid var(--bd);background:none;cursor:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:border-color .2s,background .2s}
-.bar-menu:hover{border-color:var(--bdh);background:var(--ag)}
-.bm-l{width:16px;height:1.5px;background:var(--t1);border-radius:1px;transition:transform .35s var(--e),opacity .25s}
-body.nav-open .bm-l:first-child{transform:translateY(3.3px) rotate(45deg)}
-body.nav-open .bm-l:last-child{transform:translateY(-3.3px) rotate(-45deg)}
-@media(max-width:600px){#bar,#bar.stuck{padding-left:22px;padding-right:22px}}
+/* ─── PROGRESS BAR ───────────────────────────── */
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--ac);z-index:600;width:0%;transition:width .1s linear;transform-origin:left}
 
-/* ── Full-screen nav overlay ─ */
-#nav-ov{
-  position:fixed;inset:0;z-index:450;
-  background:var(--bg);
-  display:flex;flex-direction:column;justify-content:center;
-  padding:0 52px 52px;
-  opacity:0;pointer-events:none;
-  transition:opacity .4s var(--e);
+/* ─── NAV ────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:18px 56px;
+  display:flex;align-items:center;gap:40px;
+  transition:padding .3s var(--e),background .3s,border-color .3s;
 }
-#nav-ov.open{opacity:1;pointer-events:all}
-.nv-list{display:flex;flex-direction:column;margin-bottom:40px}
-.nv-item{
-  display:flex;align-items:baseline;gap:18px;
-  padding:14px 0;
+#nav.scrolled{
+  padding:11px 56px;
+  background:var(--nav);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-bottom:1px solid var(--bd);
-  color:var(--t3);
-  transition:color .25s,padding-left .25s var(--e);
-  opacity:0;transform:translateY(24px);
-  transition:opacity .45s var(--e),transform .45s var(--e),color .2s,padding-left .25s var(--e);
 }
-#nav-ov.open .nv-item:nth-child(1){opacity:1;transform:none;transition-delay:.08s}
-#nav-ov.open .nv-item:nth-child(2){opacity:1;transform:none;transition-delay:.13s}
-#nav-ov.open .nv-item:nth-child(3){opacity:1;transform:none;transition-delay:.18s}
-#nav-ov.open .nv-item:nth-child(4){opacity:1;transform:none;transition-delay:.23s}
-.nv-item:hover{color:var(--t1);padding-left:14px}
-.nv-n{font-family:var(--fd);font-size:11px;font-weight:700;color:var(--ac);letter-spacing:.1em;flex-shrink:0}
-.nv-t{font-family:var(--fd);font-size:clamp(44px,6.5vw,82px);font-weight:700;letter-spacing:-.04em;line-height:1}
-.nv-arr{margin-left:auto;font-size:28px;opacity:0;transition:opacity .2s,transform .2s var(--e);transform:translateX(-8px)}
-.nv-item:hover .nv-arr{opacity:1;transform:none}
-.nv-foot{
-  display:flex;gap:24px;flex-wrap:wrap;
-  border-top:1px solid var(--bd);padding-top:24px;
-  opacity:0;transition:opacity .4s .3s var(--e);
+.nav-logo{font-family:var(--fd);font-size:17px;font-weight:700;letter-spacing:-.03em;margin-right:auto}
+.nav-logo em{color:var(--ac);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:8px;
+  font-size:13.5px;font-weight:500;color:var(--s2);
+  transition:color .2s,background .2s;cursor:none;
 }
-#nav-ov.open .nv-foot{opacity:1}
-.nv-link{font-size:13px;font-weight:600;color:var(--t2);transition:color .2s}
-.nv-link:hover{color:var(--t1)}
-@media(max-width:600px){#nav-ov{padding:0 22px 40px}.nv-t{font-size:clamp(36px,10vw,60px)}}
+.nav-links a:hover{color:var(--s1);background:var(--s4)}
+.nav-links a.active{color:var(--s1)}
+.nav-links .dot{width:4px;height:4px;border-radius:50%;background:var(--ac);opacity:0;transition:opacity .2s}
+.nav-links a.active .dot{opacity:1}
+.nav-end{display:flex;align-items:center;gap:8px}
+.btn-theme{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;color:var(--s2);cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-theme:hover{border-color:var(--bdh);color:var(--s1);background:var(--s4)}
+.btn-talk{
+  background:var(--ac);color:#fff;padding:8px 18px;border-radius:100px;
+  font-size:13px;font-weight:600;border:none;cursor:none;
+  transition:background .18s,transform .18s,box-shadow .18s;
+}
+.btn-talk:hover{background:var(--ach);transform:translateY(-1px);box-shadow:0 6px 22px rgba(33,113,255,.32)}
+/* mobile hamburger */
+.nav-ham{display:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;cursor:none;align-items:center;justify-content:center;flex-direction:column;gap:4.5px}
+.nav-ham span{width:14px;height:1.5px;background:var(--s1);border-radius:1px;transition:transform .3s var(--e),opacity .2s}
+body.mob-open .nav-ham span:nth-child(1){transform:translateY(3px) rotate(45deg)}
+body.mob-open .nav-ham span:nth-child(2){opacity:0}
+body.mob-open .nav-ham span:nth-child(3){transform:translateY(-3px) rotate(-45deg)}
+.mob-menu{position:fixed;inset:0;z-index:490;background:var(--bg);display:flex;flex-direction:column;justify-content:center;padding:80px 32px 40px;opacity:0;pointer-events:none;transition:opacity .3s var(--e)}
+body.mob-open .mob-menu{opacity:1;pointer-events:all}
+.mob-menu a{font-family:var(--fd);font-size:42px;font-weight:700;letter-spacing:-.03em;color:var(--s2);padding:14px 0;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;transition:color .2s}
+.mob-menu a:hover{color:var(--s1)}
+@media(max-width:780px){.nav-links,.nav-end{display:none}.nav-ham{display:flex}#nav,#nav.scrolled{padding-left:24px;padding-right:24px}}
 
-/* ── Wrap ─ */
-.w{max-width:1180px;margin:0 auto;padding:0 52px}
-@media(max-width:600px){.w{padding:0 22px}}
+/* ─── WRAP ───────────────────────────────────── */
+.w{max-width:1200px;margin:0 auto;padding:0 56px}
+@media(max-width:640px){.w{padding:0 24px}}
 
-/* ═══════ HERO ═══════ */
-#hero{min-height:100vh;display:flex;align-items:center;padding:100px 0 64px;position:relative;overflow:hidden}
-/* animated orb */
-#hero::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(26,104,255,.11) 0%,transparent 68%);left:-180px;top:50%;transform:translateY(-50%);animation:orb 9s ease-in-out infinite;pointer-events:none}
-@keyframes orb{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(-54%) scale(1.08)}}
-/* dot grid */
-#hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.042) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 0%,transparent 100%)}
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:100px 0 60px;position:relative;overflow:hidden;
+}
+/* gradient blur orb */
+.hero-orb{
+  position:absolute;width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(33,113,255,.09) 0%,transparent 70%);
+  left:-200px;top:50%;transform:translateY(-50%);pointer-events:none;
+  animation:orb 10s ease-in-out infinite;
+}
+@keyframes orb{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-55%)}}
+/* fine grid overlay */
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(circle,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:linear-gradient(to right,transparent,black 20%,black 80%,transparent);
+  -webkit-mask-image:linear-gradient(to right,transparent,black 20%,black 80%,transparent);
+}
 
-.hero-in{position:relative;z-index:1}
-.h-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);margin-bottom:22px}
-.h-dot{width:6px;height:6px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px rgba(26,104,255,.2);animation:pdot 2.5s infinite;flex-shrink:0}
-@keyframes pdot{0%,100%{box-shadow:0 0 0 3px rgba(26,104,255,.2)}50%{box-shadow:0 0 0 8px rgba(26,104,255,0)}}
+.hero-body{position:relative;z-index:1;max-width:900px}
 
-.h-name{font-family:var(--fd);font-size:clamp(56px,8.2vw,108px);font-weight:700;line-height:.9;letter-spacing:-.045em;margin-bottom:20px;white-space:nowrap}
-.h-name-line{display:block}
-.h-name-line.plain{color:var(--t1)}
-.h-name-line.grad{background:linear-gradient(120deg,#1A68FF 0%,#5FA4FF 55%,#AAD0FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-@media(max-width:600px){.h-name{white-space:normal;font-size:clamp(48px,13vw,80px)}}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--s2);
+  margin-bottom:28px;
+}
+.hero-pulse{width:6px;height:6px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 0 rgba(33,113,255,.4);animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(33,113,255,.4)}70%{box-shadow:0 0 0 8px rgba(33,113,255,0)}100%{box-shadow:0 0 0 0 rgba(33,113,255,0)}}
 
-.h-rule{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.h-rline{width:36px;height:2px;background:var(--ac);border-radius:1px;flex-shrink:0}
-.h-rtxt{font-family:var(--fd);font-size:13px;font-weight:500;color:var(--t2)}
+.hero-name{
+  font-family:var(--fd);font-size:clamp(60px,8.8vw,116px);
+  font-weight:700;letter-spacing:-.05em;line-height:.88;
+  margin-bottom:24px;
+}
+.hero-name span{display:block}
+.hero-name .n1{color:var(--s1)}
+.hero-name .n2{
+  background:linear-gradient(115deg,#2171FF 0%,#60A4FF 55%,#9EC8FF 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+@media(max-width:600px){.hero-name{font-size:clamp(52px,14vw,88px)}}
 
-.h-tag{font-size:clamp(15px,1.3vw,17px);color:var(--t2);line-height:1.78;max-width:500px;margin-bottom:36px}
-.h-tag em{color:var(--t1);font-style:italic}
+.hero-sub{
+  font-family:var(--fd);font-size:14px;font-weight:500;color:var(--s2);
+  letter-spacing:.01em;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-sub-line{width:32px;height:1.5px;background:var(--ac);flex-shrink:0}
 
-.h-btns{display:flex;gap:10px;flex-wrap:wrap}
-.btn-p{display:inline-flex;align-items:center;gap:7px;background:var(--ac);color:#fff;padding:12px 26px;border-radius:100px;font-size:13.5px;font-weight:600;border:none;cursor:none;transition:background .18s,transform .18s,box-shadow .18s}
-.btn-p:hover{background:var(--ach);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,104,255,.34)}
-.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--t1);padding:12px 24px;border-radius:100px;font-size:13.5px;font-weight:600;border:1px solid var(--bd);cursor:none;transition:border-color .18s,background .18s,transform .18s}
-.btn-o:hover{border-color:var(--bdh);background:var(--ag);transform:translateY(-2px)}
+.hero-desc{font-size:clamp(15px,1.4vw,18px);color:var(--s2);line-height:1.8;max-width:540px;margin-bottom:36px}
+.hero-desc em{color:var(--s1);font-style:italic}
 
-.h-scroll{position:absolute;bottom:32px;left:52px;display:flex;align-items:center;gap:10px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t3)}
-.h-sl{width:24px;height:1px;background:var(--t3)}
-@media(max-width:600px){.h-scroll{left:22px}}
+.hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:52px}
+.cta-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ac);color:#fff;padding:13px 28px;
+  border-radius:100px;font-size:14px;font-weight:600;border:none;cursor:none;
+  transition:background .18s,transform .18s,box-shadow .18s;
+}
+.cta-primary:hover{background:var(--ach);transform:translateY(-2px);box-shadow:0 10px 32px rgba(33,113,255,.36)}
+.cta-ghost{
+  display:inline-flex;align-items:center;gap:7px;
+  background:transparent;color:var(--s1);padding:13px 26px;
+  border-radius:100px;font-size:14px;font-weight:600;border:1px solid var(--bd);cursor:none;
+  transition:border-color .18s,background .18s,transform .18s;
+}
+.cta-ghost:hover{border-color:var(--bdh);background:var(--s4);transform:translateY(-2px)}
 
-/* ═══════ MARQUEE ═══════ */
-.mq{overflow:hidden;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:10px 0;background:var(--bg2)}
-.mq-in{display:inline-flex;animation:mrq 28s linear infinite;white-space:nowrap}
-.mq:hover .mq-in{animation-play-state:paused}
-.mq-i{display:inline-flex;align-items:center;gap:10px;padding:0 20px;font-family:var(--fd);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);flex-shrink:0}
-.mq-i b{color:var(--ac)}
-.mq-d{width:3px;height:3px;border-radius:50%;background:var(--t3);flex-shrink:0}
-@keyframes mrq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* hero stats */
+.hero-stats{display:flex;align-items:center;gap:0;border-top:1px solid var(--bd);padding-top:28px}
+.hstat{padding:0 28px;border-right:1px solid var(--bd);text-align:center}
+.hstat:first-child{padding-left:0}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--s1);letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.hstat-l{font-size:11px;color:var(--s2);letter-spacing:.02em}
+@media(max-width:480px){.hstat{padding:0 16px}.hstat-n{font-size:20px}}
 
-/* ═══════ SECTION SHARED ═══════ */
+/* ─── MARQUEE ────────────────────────────────── */
+.mq-strip{overflow:hidden;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:9px 0;background:var(--bg2)}
+.mq-track{display:inline-flex;animation:mq 30s linear infinite;white-space:nowrap}
+.mq-strip:hover .mq-track{animation-play-state:paused}
+.mq-itm{display:inline-flex;align-items:center;gap:10px;padding:0 22px;font-family:var(--fd);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:var(--s3);flex-shrink:0}
+.mq-itm b{color:var(--ac)}
+.mq-dot{width:3px;height:3px;border-radius:50%;background:var(--s3);flex-shrink:0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════════
+   SECTION SHARED
+═══════════════════════════════════════════════ */
 section{padding:100px 0}
-.s-num{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:9px}
-.s-title{font-family:var(--fd);font-size:clamp(28px,3.8vw,50px);font-weight:700;line-height:1.04;letter-spacing:-.03em}
+.s-label{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--s3);display:block;margin-bottom:8px}
+.s-title{font-family:var(--fd);font-size:clamp(28px,3.6vw,48px);font-weight:700;line-height:1.06;letter-spacing:-.03em;margin-bottom:6px}
 
-/* ═══════ WORK ═══════ */
+/* ═══════════════════════════════════════════════
+   WORK
+═══════════════════════════════════════════════ */
 #work{background:var(--bg)}
-.work-hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:44px}
-.work-sub{font-size:15px;color:var(--t2);line-height:1.7;max-width:380px}
+.work-header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+.work-header p{font-size:15px;color:var(--s2);line-height:1.7;max-width:360px}
 
-/* Project item */
-.pitem{
-  border:1px solid var(--bd);border-radius:20px;background:var(--bg2);
-  overflow:hidden;position:relative;
-  margin-bottom:14px;
-  transition:border-color .3s var(--e),transform .3s var(--e),box-shadow .3s var(--e);
+/* Project card */
+.pcard{
+  background:var(--bg2);border:1px solid var(--bd);
+  border-radius:22px;overflow:hidden;
+  margin-bottom:16px;
+  transition:border-color .3s var(--e),box-shadow .3s var(--e),transform .3s var(--e);
 }
-/* coloured top edge */
-.pitem::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:3;pointer-events:none}
-.pitem.p1::before{background:linear-gradient(90deg,#1A68FF,rgba(107,71,255,.25),transparent)}
-.pitem.p2::before{background:linear-gradient(90deg,#7C3AED,rgba(192,132,252,.22),transparent)}
-.pitem.p3::before{background:linear-gradient(90deg,#0D9488,rgba(52,211,153,.18),transparent)}
+.pcard:hover{transform:translateY(-4px)}
+.pcard.p1:hover{border-color:rgba(33,113,255,.3);box-shadow:0 24px 60px rgba(0,0,0,.28),0 0 0 1px rgba(33,113,255,.14)}
+.pcard.p2:hover{border-color:rgba(124,58,237,.3);box-shadow:0 24px 60px rgba(0,0,0,.28),0 0 0 1px rgba(124,58,237,.14)}
+.pcard.p3:hover{border-color:rgba(13,148,136,.3);box-shadow:0 24px 60px rgba(0,0,0,.28),0 0 0 1px rgba(13,148,136,.14)}
 
-.pitem.p1:hover{border-color:rgba(26,104,255,.32);box-shadow:0 20px 56px rgba(0,0,0,.3),0 0 0 1px rgba(26,104,255,.16);transform:translateY(-4px)}
-.pitem.p2:hover{border-color:rgba(124,58,237,.32);box-shadow:0 20px 56px rgba(0,0,0,.3),0 0 0 1px rgba(124,58,237,.16);transform:translateY(-4px)}
-.pitem.p3:hover{border-color:rgba(13,148,136,.32);box-shadow:0 20px 56px rgba(0,0,0,.3),0 0 0 1px rgba(13,148,136,.16);transform:translateY(-4px)}
+/* top accent stripe */
+.pcard::before{content:'';display:block;height:2px}
+.pcard.p1::before{background:linear-gradient(90deg,#2171FF 0%,rgba(96,164,255,.2) 60%,transparent)}
+.pcard.p2::before{background:linear-gradient(90deg,#7C3AED 0%,rgba(167,113,255,.2) 60%,transparent)}
+.pcard.p3::before{background:linear-gradient(90deg,#0D9488 0%,rgba(52,211,153,.15) 60%,transparent)}
 
-/* inner grid: info | visual */
-.p-grid{display:grid;grid-template-columns:42% 58%;min-height:400px}
-.pitem.p3 .p-grid{grid-template-columns:1fr}
+/* layout: 2 col — info left, screen right */
+.pcard-inner{display:grid;grid-template-columns:400px 1fr;min-height:420px}
+.pcard.p3 .pcard-inner{grid-template-columns:1fr}
 
-/* Info col */
-.p-inf{padding:32px 36px 28px;display:flex;flex-direction:column;border-right:1px solid var(--bd)}
-.p-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.ptag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 9px;border-radius:100px;border:1px solid var(--bd);color:var(--t3);transition:border-color .18s,color .18s}
-.pitem:hover .ptag{border-color:var(--bdh);color:var(--t2)}
-.p-num{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--t3);margin-bottom:8px}
-.p-title{font-family:var(--fd);font-size:clamp(16px,1.6vw,21px);font-weight:700;line-height:1.18;letter-spacing:-.02em;margin-bottom:10px}
-.p-desc{font-size:13px;color:var(--t2);line-height:1.75;margin-bottom:16px}
-.p-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:16px}
-.pm{display:flex;gap:10px;align-items:baseline}
-.pm-k{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);min-width:40px;flex-shrink:0}
-.pm-v{font-size:12px;color:var(--t2);line-height:1.6}
-.p-out{display:flex;align-items:flex-start;gap:8px;background:var(--ag);border:1px solid var(--ab);border-radius:9px;padding:10px 13px;margin-bottom:16px;margin-top:auto}
-.p-out svg{color:var(--ac);flex-shrink:0;margin-top:1px}
-.p-out span{font-size:12px;color:var(--t2);line-height:1.65}
-.p-cta{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ac);transition:gap .18s}
-.p-cta:hover{gap:10px}
+/* info col */
+.pc-info{padding:36px 40px 32px;display:flex;flex-direction:column;border-right:1px solid var(--bd)}
+.pc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.pc-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 9px;border-radius:100px;border:1px solid var(--bd);color:var(--s3);transition:border-color .18s,color .18s}
+.pcard:hover .pc-tag{border-color:var(--bdh);color:var(--s2)}
+.pc-num{font-family:var(--fd);font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--s3);margin-bottom:7px}
+.pc-title{font-family:var(--fd);font-size:clamp(17px,1.7vw,22px);font-weight:700;line-height:1.16;letter-spacing:-.02em;margin-bottom:11px}
+.pc-desc{font-size:13.5px;color:var(--s2);line-height:1.76;margin-bottom:16px}
+.pc-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.pcm{display:flex;gap:10px;align-items:baseline}
+.pcm-k{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--s3);min-width:42px;flex-shrink:0}
+.pcm-v{font-size:12.5px;color:var(--s2);line-height:1.62}
+.pc-outcome{
+  display:flex;align-items:flex-start;gap:8px;
+  background:var(--ag);border:1px solid var(--ab);
+  border-radius:10px;padding:10px 13px;margin-top:auto;margin-bottom:16px;
+}
+.pc-outcome svg{color:var(--ac);flex-shrink:0;margin-top:1px}
+.pc-outcome span{font-size:12.5px;color:var(--s2);line-height:1.65}
+.pc-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ac);transition:gap .18s}
+.pc-cta:hover{gap:10px}
 
-/* Visual col */
-.p-vis{position:relative;overflow:hidden;background:var(--bg)}
-.p-vis svg{display:block;width:100%;height:100%;position:absolute;inset:0}
+/* screen col */
+.pc-screen{overflow:hidden;position:relative;min-height:380px}
+.pc-screen svg{display:block;width:100%;height:100%;position:absolute;inset:0}
 
 /* p3 stats */
-.p3-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;border-top:1px solid var(--bd);padding-top:18px;margin-top:auto}
-.pst-n{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--ac);line-height:1;margin-bottom:3px}
-.pst-l{font-size:11px;color:var(--t3);line-height:1.5}
+.p3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--bd);padding-top:18px;margin-top:auto}
+.p3s-n{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--ac);line-height:1;margin-bottom:3px}
+.p3s-l{font-size:11px;color:var(--s3);line-height:1.5}
 
-@media(max-width:860px){
-  .p-grid{grid-template-columns:1fr!important}
-  .p-inf{border-right:none;padding:22px 20px}
-  .p-vis{min-height:220px}
+@media(max-width:900px){
+  .pcard-inner,.pcard.p3 .pcard-inner{grid-template-columns:1fr}
+  .pc-info{border-right:none;padding:24px 22px}
+  .pc-screen{min-height:220px}
 }
 
-/* ═══════ ABOUT ═══════ */
+/* ═══════════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════════ */
 #about{background:var(--bg2);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
-.about-g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
-@media(max-width:900px){.about-g{grid-template-columns:1fr;gap:40px}}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr;gap:44px}}
 
-.about-pic{border-radius:20px;overflow:hidden;border:1px solid var(--bd);aspect-ratio:4/5;position:relative}
-.about-pic img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.a-badge{position:absolute;bottom:-14px;right:-10px;background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:11px 15px;box-shadow:0 8px 28px rgba(0,0,0,.22);display:flex;align-items:center;gap:9px}
-.a-bdot{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pdot 2.5s infinite;flex-shrink:0}
-.a-bt1{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:1px}
-.a-bt2{font-family:var(--fd);font-size:13px;font-weight:700}
+.about-photo-wrap{position:relative;padding-bottom:20px}
+.about-photo{border-radius:20px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--bd)}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.about-float{
+  position:absolute;bottom:4px;right:-12px;
+  background:var(--bg2);border:1px solid var(--bd);border-radius:14px;
+  padding:12px 16px;box-shadow:0 10px 34px rgba(0,0,0,.24);
+  display:flex;align-items:center;gap:10px;
+}
+.af-dot{width:7px;height:7px;border-radius:50%;background:var(--ac);animation:pulse 2.4s infinite;flex-shrink:0}
+.af-l1{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--s3);margin-bottom:2px}
+.af-l2{font-family:var(--fd);font-size:13.5px;font-weight:700}
 
-.about-txt{}
-.a-quote{font-family:var(--fd);font-size:clamp(20px,2.6vw,34px);font-weight:700;line-height:1.22;letter-spacing:-.025em;margin-bottom:24px;padding-left:18px;border-left:2px solid var(--ac)}
-.a-quote em{color:var(--ac);font-style:normal}
-.a-body{font-size:15px;color:var(--t2);line-height:1.82}
-.a-body p+p{margin-top:12px}
-.a-facts{margin-top:24px;display:flex;flex-direction:column;gap:8px}
-.afact{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--t2)}
-.afi{width:26px;height:26px;border-radius:7px;background:var(--ag);display:flex;align-items:center;justify-content:center;color:var(--ac);flex-shrink:0}
+.about-text{}
+.aq{font-family:var(--fd);font-size:clamp(20px,2.5vw,34px);font-weight:700;line-height:1.22;letter-spacing:-.025em;margin-bottom:24px;padding-left:18px;border-left:2px solid var(--ac)}
+.aq em{color:var(--ac);font-style:normal}
+.ab{font-size:15px;color:var(--s2);line-height:1.84}
+.ab p+p{margin-top:13px}
+.afacts{margin-top:26px;display:flex;flex-direction:column;gap:9px}
+.afact{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--s2)}
+.afact-i{width:28px;height:28px;border-radius:7px;background:var(--ag);display:flex;align-items:center;justify-content:center;color:var(--ac);flex-shrink:0}
 
-/* ═══════ SKILLS ═══════ */
+/* ═══════════════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════════════ */
 #skills{background:var(--bg)}
-.sk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
-@media(max-width:860px){.sk-g{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.sk-g{grid-template-columns:1fr}}
-.sk{background:var(--bg2);border:1px solid var(--bd);border-radius:15px;padding:20px;transition:border-color .22s,transform .2s}
+.sk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:860px){.sk-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.sk-grid{grid-template-columns:1fr}}
+.sk{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:20px;transition:border-color .22s,transform .2s}
 .sk:hover{border-color:var(--bdh);transform:translateY(-2px)}
-.sk-ico{width:32px;height:32px;border-radius:8px;background:var(--ag);display:flex;align-items:center;justify-content:center;color:var(--ac);margin-bottom:12px}
+.sk-icon{width:32px;height:32px;border-radius:8px;background:var(--ag);display:flex;align-items:center;justify-content:center;color:var(--ac);margin-bottom:12px}
 .sk-t{font-family:var(--fd);font-size:13px;font-weight:700;margin-bottom:9px}
 .pills{display:flex;flex-wrap:wrap;gap:4px}
-.pill{font-size:11px;font-weight:500;color:var(--t2);background:var(--bg);border:1px solid var(--bd);padding:3px 9px;border-radius:100px;transition:all .15s}
+.pill{font-size:10.5px;font-weight:500;color:var(--s2);background:var(--bg);border:1px solid var(--bd);padding:3px 9px;border-radius:100px;transition:all .15s}
 .pill:hover{border-color:var(--ac);color:var(--ac);background:var(--ag)}
-.cert-wrap{grid-column:1/-1}
+.cert-row{grid-column:1/-1}
 .cert{display:flex;align-items:center;gap:15px;background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:18px 22px;transition:all .22s;color:inherit}
 .cert:hover{border-color:var(--ab);background:var(--ag)}
-.cert-ico{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#4285F4,#0F9D58 50%,#F4B400);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fd);font-size:16px;font-weight:700}
-.cert-org{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:2px}
+.cert-icon{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#4285F4,#0F9D58 50%,#F4B400);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fd);font-size:17px;font-weight:700}
+.cert-org{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--s3);margin-bottom:2px}
 .cert-name{font-family:var(--fd);font-size:14px;font-weight:700}
-.cert-cta{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--ac);margin-top:3px;transition:gap .18s}
-.cert:hover .cert-cta{gap:9px}
-.cert-arr{margin-left:auto;color:var(--t3);transition:transform .2s,color .2s}
+.cert-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--ac);margin-top:3px;transition:gap .18s}
+.cert:hover .cert-link{gap:9px}
+.cert-arr{margin-left:auto;color:var(--s3);transition:transform .2s,color .2s}
 .cert:hover .cert-arr{transform:translate(3px,-3px);color:var(--ac)}
 
-/* ═══════ CONTACT ═══════ */
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
 #contact{background:var(--bg2);border-top:1px solid var(--bd)}
-.ct-g{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-@media(max-width:760px){.ct-g{grid-template-columns:1fr;gap:32px}}
-.ct-h{font-family:var(--fd);font-size:clamp(32px,4.5vw,56px);font-weight:700;line-height:1.04;letter-spacing:-.035em;margin-bottom:11px}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+@media(max-width:760px){.ct-grid{grid-template-columns:1fr;gap:32px}}
+.ct-h{font-family:var(--fd);font-size:clamp(30px,4.2vw,56px);font-weight:700;line-height:1.04;letter-spacing:-.035em;margin-bottom:12px}
 .ct-h em{color:var(--ac);font-style:normal}
-.ct-sub{font-size:15px;color:var(--t2);line-height:1.7}
-.c-links{display:flex;flex-direction:column;gap:9px}
-.c-link{display:flex;align-items:center;gap:13px;padding:15px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;transition:all .22s;color:inherit}
-.c-link:hover{border-color:var(--ab);background:var(--ag);transform:translateX(4px)}
-.c-lic{width:34px;height:34px;border-radius:8px;flex-shrink:0;background:var(--ag);border:1px solid var(--ab);display:flex;align-items:center;justify-content:center;color:var(--ac)}
-.c-ll{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:2px}
-.c-lv{font-family:var(--fd);font-size:13px;font-weight:600}
-.c-arr{margin-left:auto;color:var(--t3);transition:transform .2s,color .2s}
-.c-link:hover .c-arr{transform:translateX(4px);color:var(--ac)}
+.ct-p{font-size:15px;color:var(--s2);line-height:1.74}
+.ct-links{display:flex;flex-direction:column;gap:8px}
+.ct-link{display:flex;align-items:center;gap:13px;padding:14px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:13px;transition:all .22s;color:inherit}
+.ct-link:hover{border-color:var(--ab);background:var(--ag);transform:translateX(4px)}
+.ct-li{width:34px;height:34px;border-radius:8px;flex-shrink:0;background:var(--ag);border:1px solid var(--ab);display:flex;align-items:center;justify-content:center;color:var(--ac)}
+.ct-ll{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--s3);margin-bottom:2px}
+.ct-lv{font-family:var(--fd);font-size:13px;font-weight:600}
+.ct-arr{margin-left:auto;color:var(--s3);transition:transform .2s,color .2s}
+.ct-link:hover .ct-arr{transform:translateX(4px);color:var(--ac)}
 
-/* ═══════ FOOTER ═══════ */
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
 footer{background:var(--bg);border-top:1px solid var(--bd);overflow:hidden}
-.f-big{font-family:var(--fd);font-size:clamp(44px,8vw,100px);font-weight:700;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--bd);line-height:.9;padding:32px 0 20px;user-select:none;transition:-webkit-text-stroke-color .4s}
-footer:hover .f-big{-webkit-text-stroke-color:rgba(26,104,255,.2)}
-.f-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 0 26px;border-top:1px solid var(--bd);flex-wrap:wrap;gap:9px}
-.f-logo{font-family:var(--fd);font-size:13.5px;font-weight:700;letter-spacing:-.02em}
-.f-logo em{color:var(--ac);font-style:normal}
-.f-copy{font-size:11px;color:var(--t3)}
-.f-top{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--t3);transition:color .2s}
-.f-top:hover{color:var(--t2)}
+.ft-big{font-family:var(--fd);font-size:clamp(40px,7.5vw,96px);font-weight:700;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--bd);line-height:.9;padding:32px 0 18px;user-select:none;transition:-webkit-text-stroke-color .4s}
+footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
+.ft-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 0 26px;border-top:1px solid var(--bd);flex-wrap:wrap;gap:9px}
+.ft-logo{font-family:var(--fd);font-size:13.5px;font-weight:700;letter-spacing:-.02em}
+.ft-logo em{color:var(--ac);font-style:normal}
+.ft-copy{font-size:11px;color:var(--s3)}
+.ft-top{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--s3);transition:color .2s}
+.ft-top:hover{color:var(--s2)}
 
-/* ── Reveal ─ */
-.rv{opacity:0;transform:translateY(18px);transition:opacity .65s var(--e),transform .65s var(--e)}
+/* ─── REVEAL ─────────────────────────────────── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s var(--e),transform .7s var(--e)}
 .rv.in{opacity:1;transform:none}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.28s}
 </style>
 </head>
 <body>
 
-<div id="cd"></div>
-<div id="cr"></div>
+<div id="_d"></div>
+<div id="_r"></div>
+<div id="prog"></div>
 
-<!-- ── Top bar ── -->
-<header id="bar">
-  <a href="#hero" class="bar-logo">JL<span>.</span></a>
-  <div class="bar-r">
-    <button class="bar-theme" id="themeBtn" aria-label="Toggle theme">
-      <svg id="i-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg id="i-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<!-- ════ NAV ════════════════════════════════════ -->
+<header id="nav">
+  <a href="#hero" class="nav-logo">JL<em>.</em></a>
+  <ul class="nav-links">
+    <li><a href="#work" data-sec="work"><span class="dot"></span>Work</a></li>
+    <li><a href="#about" data-sec="about"><span class="dot"></span>About</a></li>
+    <li><a href="#skills" data-sec="skills"><span class="dot"></span>Skills</a></li>
+    <li><a href="#contact" data-sec="contact"><span class="dot"></span>Contact</a></li>
+  </ul>
+  <div class="nav-end">
+    <button class="btn-theme" id="themeBtn" aria-label="Toggle theme">
+      <svg id="ico-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="ico-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
-    <button class="bar-menu" id="menuBtn" aria-label="Open menu">
-      <div class="bm-l"></div>
-      <div class="bm-l"></div>
-    </button>
+    <a href="#contact" class="btn-talk">Let's Talk →</a>
   </div>
+  <button class="nav-ham" id="hamBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<!-- ── Full-screen nav overlay ── -->
-<div id="nav-ov" role="dialog" aria-modal="true" aria-label="Navigation">
-  <nav class="nv-list">
-    <a href="#work"    class="nv-item" data-close><span class="nv-n">01</span><span class="nv-t">Work</span><span class="nv-arr">↗</span></a>
-    <a href="#about"   class="nv-item" data-close><span class="nv-n">02</span><span class="nv-t">About</span><span class="nv-arr">↗</span></a>
-    <a href="#skills"  class="nv-item" data-close><span class="nv-n">03</span><span class="nv-t">Skills</span><span class="nv-arr">↗</span></a>
-    <a href="#contact" class="nv-item" data-close><span class="nv-n">04</span><span class="nv-t">Contact</span><span class="nv-arr">↗</span></a>
-  </nav>
-  <div class="nv-foot">
-    <a href="mailto:likhiteshj19@gmail.com" class="nv-link">likhiteshj19@gmail.com</a>
-    <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="nv-link">linkedin.com/in/likhitesh1996 ↗</a>
-  </div>
+<!-- mobile menu -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#work"    data-mob>Work →</a>
+  <a href="#about"   data-mob>About →</a>
+  <a href="#skills"  data-mob>Skills →</a>
+  <a href="#contact" data-mob>Contact →</a>
 </div>
 
-<!-- ── Hero ── -->
+<!-- ════ HERO ════════════════════════════════════ -->
 <section id="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-grid"></div>
   <div class="w">
-    <div class="hero-in">
-      <div class="h-eyebrow rv"><span class="h-dot"></span>UX Designer &nbsp;·&nbsp; SAP &nbsp;·&nbsp; 5 Years Experience</div>
-      <h1 class="h-name rv d1">
-        <span class="h-name-line plain">J</span>
-        <span class="h-name-line grad">Likithesh.</span>
+    <div class="hero-body">
+      <div class="hero-badge rv"><span class="hero-pulse"></span>Available for opportunities &nbsp;·&nbsp; SAP &nbsp;·&nbsp; Bangalore</div>
+      <h1 class="hero-name rv d1">
+        <span class="n1">J</span>
+        <span class="n2">Likithesh.</span>
       </h1>
-      <div class="h-rule rv d2"><div class="h-rline"></div><span class="h-rtxt">UX Designer — AI &amp; Enterprise Products</span></div>
-      <p class="h-tag rv d2">I understand complex enterprise systems,<br>identify the <em>real UX problem</em>, and turn them<br>into simple, human-centered experiences.</p>
-      <div class="h-btns rv d3">
-        <a href="#work" class="btn-p">See My Work <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="btn-o">LinkedIn ↗</a>
+      <div class="hero-sub rv d2"><div class="hero-sub-line"></div>UX Designer — AI &amp; Enterprise Products · 5 Years at SAP</div>
+      <p class="hero-desc rv d2">I understand complex enterprise systems, find the <em>real UX problem</em>, and turn them into simple, human-centered experiences that just work.</p>
+      <div class="hero-actions rv d3">
+        <a href="#work" class="cta-primary">View My Work <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="cta-ghost">LinkedIn ↗</a>
+      </div>
+      <div class="hero-stats rv d3">
+        <div class="hstat"><div class="hstat-n">5+</div><div class="hstat-l">Years Experience</div></div>
+        <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Featured Projects</div></div>
+        <div class="hstat"><div class="hstat-n">SAP</div><div class="hstat-l">Current Employer</div></div>
+        <div class="hstat"><div class="hstat-n">AI</div><div class="hstat-l">Focus Area</div></div>
       </div>
     </div>
   </div>
-  <div class="h-scroll"><div class="h-sl"></div>Scroll</div>
 </section>
 
-<!-- ── Marquee ── -->
-<div class="mq">
-  <div class="mq-in">
-    <span class="mq-i">UX Design <span class="mq-d"></span></span><span class="mq-i"><b>AI-First Experiences</b> <span class="mq-d"></span></span><span class="mq-i">SAP Joule Studio <span class="mq-d"></span></span><span class="mq-i">User Research <span class="mq-d"></span></span><span class="mq-i"><b>Interaction Design</b> <span class="mq-d"></span></span><span class="mq-i">Enterprise UX <span class="mq-d"></span></span><span class="mq-i">Design Systems <span class="mq-d"></span></span><span class="mq-i"><b>Figma</b> <span class="mq-d"></span></span><span class="mq-i">Conversational UX <span class="mq-d"></span></span><span class="mq-i"><b>Complexity → Clarity</b> <span class="mq-d"></span></span>
-    <span class="mq-i">UX Design <span class="mq-d"></span></span><span class="mq-i"><b>AI-First Experiences</b> <span class="mq-d"></span></span><span class="mq-i">SAP Joule Studio <span class="mq-d"></span></span><span class="mq-i">User Research <span class="mq-d"></span></span><span class="mq-i"><b>Interaction Design</b> <span class="mq-d"></span></span><span class="mq-i">Enterprise UX <span class="mq-d"></span></span><span class="mq-i">Design Systems <span class="mq-d"></span></span><span class="mq-i"><b>Figma</b> <span class="mq-d"></span></span><span class="mq-i">Conversational UX <span class="mq-d"></span></span><span class="mq-i"><b>Complexity → Clarity</b> <span class="mq-d"></span></span>
+<!-- ════ MARQUEE ═════════════════════════════════ -->
+<div class="mq-strip">
+  <div class="mq-track">
+    <span class="mq-itm">UX Design <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>AI-First Experiences</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">SAP Joule Studio <span class="mq-dot"></span></span>
+    <span class="mq-itm">User Research <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Interaction Design</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Enterprise UX <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Design Systems</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Figma <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Conversational UX</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Complexity → Clarity <span class="mq-dot"></span></span>
+    <span class="mq-itm">UX Design <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>AI-First Experiences</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">SAP Joule Studio <span class="mq-dot"></span></span>
+    <span class="mq-itm">User Research <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Interaction Design</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Enterprise UX <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Design Systems</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Figma <span class="mq-dot"></span></span>
+    <span class="mq-itm"><b>Conversational UX</b> <span class="mq-dot"></span></span>
+    <span class="mq-itm">Complexity → Clarity <span class="mq-dot"></span></span>
   </div>
 </div>
 
-<!-- ── Work ── -->
+<!-- ════ WORK ════════════════════════════════════ -->
 <section id="work">
   <div class="w">
-    <div class="work-hdr rv">
-      <div><span class="s-num">— 01 / Work</span><h2 class="s-title">Selected Projects</h2></div>
-      <p class="work-sub">Designing AI-first enterprise experiences at SAP — where complexity meets clarity.</p>
+    <div class="work-header rv">
+      <div><span class="s-label">— 01 / Work</span><h2 class="s-title">Selected Projects</h2></div>
+      <p>Designing AI-first enterprise experiences at SAP — where complexity meets clarity.</p>
     </div>
 
-    <!-- P1 -->
-    <div class="pitem p1 rv">
-      <div class="p-grid">
-        <div class="p-inf">
-          <div class="p-tags"><span class="ptag">AI-First Design</span><span class="ptag">Enterprise UX</span><span class="ptag">Joule Studio</span></div>
-          <div class="p-num">01 / 03</div>
-          <h3 class="p-title">Joule Studio 1.0 → 2.0 Migration Experience</h3>
-          <p class="p-desc">Users needed to migrate solutions between Joule Studio versions — a technically complex, high-stakes workflow with zero guidance. The system had to feel intelligent, not intimidating.</p>
-          <div class="p-meta">
-            <div class="pm"><span class="pm-k">Role</span><span class="pm-v">UX Designer — user flows, IA, AI-first interaction model, migration dashboard, readiness states &amp; error recovery</span></div>
-            <div class="pm"><span class="pm-k">Focus</span><span class="pm-v">Migration readiness · AI guidance · State communication · Error recovery</span></div>
+    <!-- PROJECT 1: Migration -->
+    <div class="pcard p1 rv">
+      <div class="pcard-inner">
+        <div class="pc-info">
+          <div class="pc-tags"><span class="pc-tag">AI-First</span><span class="pc-tag">Enterprise UX</span><span class="pc-tag">Joule Studio</span></div>
+          <div class="pc-num">Project 01 / 03</div>
+          <h3 class="pc-title">Joule Studio 1.0 → 2.0 Migration Experience</h3>
+          <p class="pc-desc">Users needed to migrate solutions between Joule Studio versions — a high-stakes workflow with no clear guidance. The system had to feel intelligent, not intimidating.</p>
+          <div class="pc-meta">
+            <div class="pcm"><span class="pcm-k">Role</span><span class="pcm-v">UX Designer — user flows, IA, AI-first interaction model, migration dashboard, readiness states &amp; error recovery</span></div>
+            <div class="pcm"><span class="pcm-k">Focus</span><span class="pcm-v">Migration readiness · AI guidance · State communication · Error recovery</span></div>
           </div>
-          <div class="p-out">
+          <div class="pc-outcome">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Designed an AI-guided migration experience that communicated readiness, progress &amp; next steps — reducing cognitive load in a high-stakes workflow.</span>
+            <span>Designed an AI-guided migration flow that communicated readiness, progress &amp; next steps — reducing cognitive load in a high-stakes workflow.</span>
           </div>
-          <a href="https://www.figma.com/design/mNi6IrSLcixi5EaJh629MD/" target="_blank" rel="noopener" class="p-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          <a href="https://www.figma.com/design/mNi6IrSLcixi5EaJh629MD/" target="_blank" rel="noopener" class="pc-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         </div>
-        <div class="p-vis">
-          <svg viewBox="0 0 600 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(150deg,#05061A 0%,#080D28 50%,#060B1E 100%)">
-            <defs>
-              <linearGradient id="g1a" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1A68FF" stop-opacity=".9"/><stop offset="100%" stop-color="#6B47FF" stop-opacity=".7"/></linearGradient>
-              <linearGradient id="gf1" x1="0" y1="0" x2="0" y2="1"><stop offset="55%" stop-color="transparent"/><stop offset="100%" stop-color="#080D28"/></linearGradient>
-              <filter id="bl1"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <!-- bg glow -->
-            <ellipse cx="160" cy="220" rx="140" ry="120" fill="rgba(26,104,255,.07)" filter="url(#bl1)"/>
-            <ellipse cx="460" cy="220" rx="140" ry="120" fill="rgba(107,71,255,.07)" filter="url(#bl1)"/>
-            <!-- app chrome -->
-            <rect x="30" y="28" width="540" height="380" rx="12" fill="rgba(10,12,30,.9)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-            <!-- chrome topbar -->
-            <rect x="30" y="28" width="540" height="36" rx="12" fill="rgba(12,14,34,1)"/>
-            <rect x="30" y="52" width="540" height="12" fill="rgba(12,14,34,1)"/>
-            <circle cx="52" cy="46" r="5" fill="rgba(255,80,80,.5)"/>
-            <circle cx="68" cy="46" r="5" fill="rgba(255,200,40,.5)"/>
-            <circle cx="84" cy="46" r="5" fill="rgba(40,200,80,.5)"/>
-            <text x="300" y="51" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600">Joule Studio — Migration Center</text>
-            <!-- sidebar -->
-            <rect x="30" y="64" width="120" height="344" fill="rgba(8,10,26,.95)" rx="0"/>
-            <rect x="150" y="64" width="1" height="344" fill="rgba(255,255,255,.05)"/>
-            <text x="44" y="92" fill="rgba(255,255,255,.18)" font-family="Space Grotesk,sans-serif" font-size="8" font-weight="700" letter-spacing=".09em">JOULE STUDIO</text>
+
+        <!-- Joule Studio Migration UI -->
+        <div class="pc-screen">
+          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="720" height="480" fill="#F5F5F8"/>
+            <!-- Top header bar -->
+            <rect width="720" height="44" fill="#1C1C1C"/>
+            <!-- SAP logo area -->
+            <rect x="12" y="12" width="20" height="20" rx="2" fill="#F0AB00"/>
+            <text x="38" y="26" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">Build</text>
+            <!-- header right icons -->
+            <circle cx="680" cy="22" r="12" fill="#3A3A3A"/>
+            <text x="680" y="27" text-anchor="middle" fill="#AAA" font-family="Arial,sans-serif" font-size="10">JL</text>
+            <!-- Left sidebar -->
+            <rect x="0" y="44" width="194" height="436" fill="white" stroke="#E8E8EC" stroke-width="1"/>
             <!-- sidebar items -->
-            <rect x="36" y="102" width="102" height="26" rx="6" fill="rgba(26,104,255,.18)" stroke="rgba(26,104,255,.3)" stroke-width=".8"/>
-            <text x="50" y="119" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600">Migration</text>
-            <rect x="36" y="136" width="102" height="22" rx="6" fill="rgba(255,255,255,.0)"/>
-            <text x="50" y="151" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="9">Solutions</text>
-            <rect x="36" y="164" width="102" height="22" rx="6" fill="rgba(255,255,255,.0)"/>
-            <text x="50" y="179" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="9">Deployments</text>
-            <rect x="36" y="192" width="102" height="22" rx="6"/>
-            <text x="50" y="207" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="9">Settings</text>
-            <!-- main content -->
-            <!-- page title -->
-            <text x="172" y="91" fill="rgba(255,255,255,.75)" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700">Migrate to Joule Studio 2.0</text>
-            <text x="172" y="107" fill="rgba(140,150,200,.45)" font-family="Space Grotesk,sans-serif" font-size="9">Select solutions to migrate and review compatibility</text>
-            <!-- step bar -->
-            <rect x="172" y="116" width="370" height="28" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.05)" stroke-width=".8"/>
-            <!-- step 1 done -->
-            <circle cx="194" cy="130" r="7" fill="rgba(39,201,63,.25)" stroke="rgba(39,201,63,.5)" stroke-width=".8"/>
-            <path d="M190 130 L193 133 L198 126" stroke="rgba(39,201,63,.9)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <text x="206" y="134" fill="rgba(150,200,150,.55)" font-family="Space Grotesk,sans-serif" font-size="8" font-weight="600">Readiness</text>
-            <rect x="242" y="129" width="30" height=".8" fill="rgba(255,255,255,.07)"/>
-            <!-- step 2 active -->
-            <circle cx="278" cy="130" r="7" fill="rgba(26,104,255,.3)" stroke="rgba(26,104,255,.6)" stroke-width=".8"/>
-            <text x="278" y="134" text-anchor="middle" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="8" font-weight="700">2</text>
-            <text x="290" y="134" fill="rgba(107,179,255,.7)" font-family="Space Grotesk,sans-serif" font-size="8" font-weight="600">Configure</text>
-            <rect x="330" y="129" width="30" height=".8" fill="rgba(255,255,255,.05)"/>
-            <!-- step 3 -->
-            <circle cx="366" cy="130" r="7" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.1)" stroke-width=".8"/>
-            <text x="366" y="134" text-anchor="middle" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="8">3</text>
-            <text x="378" y="134" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="8">Migrate</text>
-            <rect x="412" y="129" width="30" height=".8" fill="rgba(255,255,255,.04)"/>
-            <!-- step 4 -->
-            <circle cx="448" cy="130" r="7" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.08)" stroke-width=".8"/>
-            <text x="448" y="134" text-anchor="middle" fill="rgba(255,255,255,.18)" font-family="Space Grotesk,sans-serif" font-size="8">4</text>
-            <text x="460" y="134" fill="rgba(255,255,255,.18)" font-family="Space Grotesk,sans-serif" font-size="8">Done</text>
-            <!-- solution cards row -->
-            <!-- card 1 selected -->
-            <rect x="172" y="154" width="176" height="80" rx="8" fill="rgba(26,104,255,.1)" stroke="rgba(26,104,255,.35)" stroke-width="1"/>
-            <rect x="172" y="154" width="176" height="4" rx="2" fill="rgba(26,104,255,.6)"/>
-            <text x="186" y="174" fill="rgba(200,220,255,.75)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700">purchase-contract-agent</text>
-            <rect x="186" y="180" width="60" height="7" rx="3" fill="rgba(39,201,63,.15)" stroke="rgba(39,201,63,.3)" stroke-width=".6"/>
-            <text x="216" y="186" text-anchor="middle" fill="rgba(80,220,100,.8)" font-family="Space Grotesk,sans-serif" font-size="6.5" font-weight="600">Compatible ✓</text>
-            <text x="186" y="200" fill="rgba(120,140,200,.4)" font-family="Space Grotesk,sans-serif" font-size="7.5">v1.4.2 · 3 tools · Last run 2h ago</text>
-            <rect x="186" y="210" width="62" height="14" rx="7" fill="rgba(26,104,255,.3)" stroke="rgba(26,104,255,.5)" stroke-width=".8"/>
-            <text x="217" y="221" text-anchor="middle" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700">Selected ✓</text>
-            <!-- card 2 -->
-            <rect x="358" y="154" width="184" height="80" rx="8" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
-            <text x="372" y="174" fill="rgba(200,220,255,.5)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="700">invoice-processing-agent</text>
-            <rect x="372" y="180" width="60" height="7" rx="3" fill="rgba(255,189,46,.1)" stroke="rgba(255,189,46,.28)" stroke-width=".6"/>
-            <text x="402" y="186" text-anchor="middle" fill="rgba(255,200,80,.7)" font-family="Space Grotesk,sans-serif" font-size="6.5" font-weight="600">Review needed</text>
-            <text x="372" y="200" fill="rgba(120,140,200,.3)" font-family="Space Grotesk,sans-serif" font-size="7.5">v1.2.0 · 5 tools · 1 warning</text>
-            <rect x="372" y="210" width="60" height="14" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.1)" stroke-width=".8"/>
-            <text x="402" y="221" text-anchor="middle" fill="rgba(200,200,220,.4)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="600">Select</text>
+            <rect x="12" y="62" width="170" height="30" rx="6" fill="#F0F0F8"/>
+            <circle cx="26" cy="77" r="6" fill="#CBD5E1"/>
+            <text x="40" y="82" fill="#64748B" font-family="-apple-system,sans-serif" font-size="11">Lobby</text>
+            <rect x="12" y="98" width="170" height="30" rx="6"/>
+            <circle cx="26" cy="113" r="6" fill="#CBD5E1"/>
+            <text x="40" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Connectors</text>
+            <!-- Joule Studio active -->
+            <rect x="12" y="134" width="170" height="30" rx="6" fill="#EFF6FF"/>
+            <circle cx="26" cy="149" r="6" fill="#2171FF"/>
+            <text x="40" y="154" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="11" font-weight="600">Joule Studio</text>
+            <circle cx="173" cy="149" r="4" fill="#2171FF"/>
+            <rect x="12" y="170" width="170" height="30" rx="6"/>
+            <circle cx="26" cy="185" r="6" fill="#CBD5E1"/>
+            <text x="40" y="190" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Deployments</text>
+            <rect x="12" y="206" width="170" height="30" rx="6"/>
+            <circle cx="26" cy="221" r="6" fill="#CBD5E1"/>
+            <text x="40" y="226" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Settings</text>
+            <!-- sub items under Joule Studio -->
+            <rect x="24" y="242" width="1.5" height="60" fill="#E2E8F0"/>
+            <text x="40" y="260" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="10.5">Solutions</text>
+            <rect x="33" y="268" width="150" height="24" rx="5" fill="#EFF6FF"/>
+            <text x="40" y="284" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Migration Center</text>
+            <!-- Main content area -->
+            <!-- Breadcrumb -->
+            <text x="214" y="62" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Joule Studio</text>
+            <text x="290" y="62" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11"> / </text>
+            <text x="302" y="62" fill="#475569" font-family="-apple-system,sans-serif" font-size="11">Migration Center</text>
+            <!-- Page title -->
+            <text x="214" y="86" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="18" font-weight="700">Migrate to Joule Studio 2.0</text>
+            <!-- Step indicator -->
+            <rect x="214" y="98" width="480" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+            <!-- Step 1 done -->
+            <circle cx="232" cy="114" r="8" fill="#22C55E"/>
+            <path d="M228 114 L231 117 L236 110" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <text x="245" y="118" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9.5">Compatibility Check</text>
+            <rect x="298" y="113.5" width="32" height="1" fill="#E2E8F0"/>
+            <!-- Step 2 active -->
+            <circle cx="336" cy="114" r="8" fill="#2171FF"/>
+            <text x="336" y="118" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">2</text>
+            <text x="349" y="118" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Select Solutions</text>
+            <rect x="402" y="113.5" width="32" height="1" fill="#E2E8F0"/>
+            <!-- Step 3 -->
+            <circle cx="440" cy="114" r="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="440" y="118" text-anchor="middle" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">3</text>
+            <text x="453" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">Migrate</text>
+            <rect x="485" y="113.5" width="32" height="1" fill="#E2E8F0"/>
+            <!-- Step 4 -->
+            <circle cx="524" cy="114" r="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="524" y="118" text-anchor="middle" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">4</text>
+            <text x="537" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">Done</text>
+            <!-- Solution cards -->
+            <!-- Card 1 selected -->
+            <rect x="214" y="140" width="228" height="100" rx="8" fill="white" stroke="#2171FF" stroke-width="1.5"/>
+            <rect x="214" y="140" width="228" height="4" rx="2" fill="#2171FF"/>
+            <rect x="370" y="148" width="60" height="18" rx="9" fill="#DBEAFE"/>
+            <text x="400" y="161" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">✓ Selected</text>
+            <text x="228" y="168" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">purchase-contract-agent</text>
+            <rect x="228" y="175" width="60" height="16" rx="8" fill="#DCFCE7"/>
+            <text x="258" y="187" text-anchor="middle" fill="#166534" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="600">Compatible ✓</text>
+            <text x="228" y="204" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">v1.4.2 · 3 tools · 4 data sources</text>
+            <text x="228" y="218" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">Last run: 2 hours ago</text>
+            <!-- Card 2 -->
+            <rect x="452" y="140" width="228" height="100" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+            <text x="466" y="168" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">invoice-processing-agent</text>
+            <rect x="466" y="175" width="78" height="16" rx="8" fill="#FEF9C3"/>
+            <text x="505" y="187" text-anchor="middle" fill="#854D0E" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="600">Review needed</text>
+            <text x="466" y="204" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">v1.2.0 · 5 tools · 1 warning</text>
+            <text x="466" y="218" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">Breaking change in tool API</text>
             <!-- AI panel -->
-            <rect x="172" y="244" width="370" height="90" rx="8" fill="rgba(26,104,255,.06)" stroke="rgba(26,104,255,.18)" stroke-width=".8"/>
-            <circle cx="190" cy="268" r="10" fill="rgba(26,104,255,.25)" stroke="rgba(26,104,255,.5)" stroke-width=".8"/>
-            <text x="190" y="272" text-anchor="middle" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700">AI</text>
-            <text x="208" y="263" fill="rgba(180,200,255,.55)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700">Joule Assistant</text>
-            <text x="208" y="276" fill="rgba(140,160,220,.45)" font-family="Space Grotesk,sans-serif" font-size="8">1 solution selected. purchase-contract-agent is fully compatible</text>
-            <text x="208" y="289" fill="rgba(140,160,220,.35)" font-family="Space Grotesk,sans-serif" font-size="8">with v2.0. Estimated migration time: ~3 min. No downtime.</text>
-            <rect x="208" y="298" width="80" height="18" rx="9" fill="rgba(26,104,255,.25)" stroke="rgba(26,104,255,.5)" stroke-width=".8"/>
-            <text x="248" y="310" text-anchor="middle" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="8" font-weight="700">Start Migration →</text>
-            <!-- fade bottom -->
-            <rect x="30" y="340" width="540" height="104" fill="url(#gf1)"/>
+            <rect x="214" y="252" width="466" height="82" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+            <circle cx="232" cy="279" r="11" fill="#2171FF"/>
+            <text x="232" y="283" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">AI</text>
+            <text x="250" y="272" fill="#1E40AF" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">Joule Assistant</text>
+            <text x="250" y="286" fill="#3B82F6" font-family="-apple-system,sans-serif" font-size="9.5">1 solution selected. purchase-contract-agent is fully compatible with v2.0.</text>
+            <text x="250" y="299" fill="#3B82F6" font-family="-apple-system,sans-serif" font-size="9.5">Estimated migration time: ~3 minutes. No downtime expected.</text>
+            <rect x="250" y="310" width="100" height="18" rx="9" fill="#2171FF"/>
+            <text x="300" y="323" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">Start Migration →</text>
+            <!-- Bottom fade -->
+            <defs><linearGradient id="fg1" x1="0" y1="0" x2="0" y2="1"><stop offset="70%" stop-color="#F5F5F8" stop-opacity="0"/><stop offset="100%" stop-color="#F5F5F8"/></linearGradient></defs>
+            <rect x="194" y="380" width="526" height="100" fill="url(#fg1)"/>
           </svg>
         </div>
       </div>
     </div>
 
-    <!-- P2 -->
-    <div class="pitem p2 rv d1">
-      <div class="p-grid">
-        <div class="p-inf">
-          <div class="p-tags"><span class="ptag">Interaction Design</span><span class="ptag">Data Tables</span><span class="ptag">Mass Actions</span></div>
-          <div class="p-num">02 / 03</div>
-          <h3 class="p-title">Execution Monitoring &amp; Bulk Action Design</h3>
-          <p class="p-desc">Managing hundreds of running executions required more than a table. Users needed to see state, act in bulk, understand API limits, and recover from failures — in one coherent flow.</p>
-          <div class="p-meta">
-            <div class="pm"><span class="pm-k">Role</span><span class="pm-v">UX Designer — IA, mass-action patterns, bulk selection, API constraint handling, error flows, UX copy</span></div>
-            <div class="pm"><span class="pm-k">Focus</span><span class="pm-v">Bulk selection · 100-instance API limits · Retry/Resume/Suspend/Cancel</span></div>
+    <!-- PROJECT 2: Execution Monitor — based on real SAP Build screenshot -->
+    <div class="pcard p2 rv d1">
+      <div class="pcard-inner">
+        <div class="pc-info">
+          <div class="pc-tags"><span class="pc-tag">Interaction Design</span><span class="pc-tag">Data Tables</span><span class="pc-tag">Mass Actions</span></div>
+          <div class="pc-num">Project 02 / 03</div>
+          <h3 class="pc-title">Execution Monitoring &amp; Bulk Action Design</h3>
+          <p class="pc-desc">Managing hundreds of running process executions required more than a table. Users needed to see state at scale, act in bulk across 1830+ instances, understand API limits, and recover from failures.</p>
+          <div class="pc-meta">
+            <div class="pcm"><span class="pcm-k">Role</span><span class="pcm-v">UX Designer — IA, mass-action patterns, bulk selection, API constraint handling, error recovery flows, UX copy</span></div>
+            <div class="pcm"><span class="pcm-k">Focus</span><span class="pcm-v">Bulk selection · 100-instance API limits · Retry / Resume / Suspend / Cancel patterns</span></div>
           </div>
-          <div class="p-out">
+          <div class="pc-outcome">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Designed bulk-management patterns with Select All, API limit handling, and full action coverage — Retry, Resume, Suspend, Restart, Cancel.</span>
+            <span>Designed comprehensive bulk-management patterns handling SAP Build's 100-instance API limits with graceful guidance, full action coverage, and clear status communication.</span>
           </div>
-          <a href="https://www.figma.com/design/RmsqAx2GKv6cmGFBlnkaPo/" target="_blank" rel="noopener" class="p-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          <a href="https://www.figma.com/design/RmsqAx2GKv6cmGFBlnkaPo/" target="_blank" rel="noopener" class="pc-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         </div>
-        <div class="p-vis">
-          <svg viewBox="0 0 600 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:linear-gradient(150deg,#08071E 0%,#0A0922 50%,#06071A 100%)">
-            <defs>
-              <linearGradient id="gf2" x1="0" y1="0" x2="0" y2="1"><stop offset="55%" stop-color="transparent"/><stop offset="100%" stop-color="#0A0922"/></linearGradient>
-              <filter id="bl2"><feGaussianBlur stdDeviation="14"/></filter>
-            </defs>
-            <ellipse cx="300" cy="220" rx="260" ry="180" fill="rgba(124,58,237,.06)" filter="url(#bl2)"/>
-            <!-- app chrome -->
-            <rect x="30" y="28" width="540" height="380" rx="12" fill="rgba(10,9,28,.92)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-            <rect x="30" y="28" width="540" height="36" rx="12" fill="rgba(12,10,32,1)"/>
-            <rect x="30" y="52" width="540" height="12" fill="rgba(12,10,32,1)"/>
-            <circle cx="52" cy="46" r="5" fill="rgba(255,80,80,.5)"/>
-            <circle cx="68" cy="46" r="5" fill="rgba(255,200,40,.5)"/>
-            <circle cx="84" cy="46" r="5" fill="rgba(40,200,80,.5)"/>
-            <text x="300" y="51" text-anchor="middle" fill="rgba(255,255,255,.25)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600">Joule Studio — Execution Monitor</text>
+
+        <!-- SAP Build Process Monitor — close to real screenshot -->
+        <div class="pc-screen">
+          <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="720" height="480" fill="#F5F5F8"/>
+            <!-- SAP header -->
+            <rect width="720" height="44" fill="#1C1C1C"/>
+            <rect x="10" y="10" width="24" height="24" rx="2" fill="#F0AB00"/>
+            <text x="15" y="26" fill="white" font-family="Arial,sans-serif" font-size="10" font-weight="900">SAP</text>
+            <text x="40" y="27" fill="white" font-family="Arial,sans-serif" font-size="13" font-weight="600">Build</text>
+            <circle cx="680" cy="22" r="12" fill="#3A3A3A"/>
+            <text x="680" y="27" text-anchor="middle" fill="#AAA" font-family="Arial,sans-serif" font-size="10">JL</text>
             <!-- sidebar -->
-            <rect x="30" y="64" width="110" height="344" fill="rgba(9,8,26,.97)"/>
-            <rect x="140" y="64" width="1" height="344" fill="rgba(255,255,255,.05)"/>
-            <text x="44" y="90" fill="rgba(255,255,255,.18)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700" letter-spacing=".08em">JOULE STUDIO</text>
-            <rect x="36" y="98" width="92" height="24" rx="6" fill="rgba(124,58,237,.2)" stroke="rgba(124,58,237,.35)" stroke-width=".8"/>
-            <text x="48" y="114" fill="rgba(180,150,255,.85)" font-family="Space Grotesk,sans-serif" font-size="9" font-weight="600">Executions</text>
-            <text x="48" y="138" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="8.5">Solutions</text>
-            <text x="48" y="158" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="8.5">Deployments</text>
-            <text x="48" y="178" fill="rgba(255,255,255,.2)" font-family="Space Grotesk,sans-serif" font-size="8.5">Analytics</text>
-            <!-- main -->
-            <text x="158" y="87" fill="rgba(255,255,255,.7)" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700">Execution Monitor</text>
-            <!-- filter + search row -->
-            <rect x="158" y="95" width="200" height="22" rx="6" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
-            <text x="168" y="110" fill="rgba(200,200,230,.25)" font-family="Space Grotesk,sans-serif" font-size="8.5">Search executions…</text>
-            <rect x="366" y="95" width="50" height="22" rx="6" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.07)" stroke-width=".8"/>
-            <text x="391" y="110" text-anchor="middle" fill="rgba(200,200,230,.35)" font-family="Space Grotesk,sans-serif" font-size="8">Filter</text>
-            <!-- selection banner -->
-            <rect x="158" y="124" width="400" height="26" rx="6" fill="rgba(124,58,237,.12)" stroke="rgba(124,58,237,.3)" stroke-width=".8"/>
-            <rect x="164" y="133" width="8" height="8" rx="2" fill="rgba(124,58,237,.8)"/>
-            <path d="M165.5 137 L168 139.5 L172 134.5" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <text x="178" y="140" fill="rgba(180,150,255,.9)" font-family="Space Grotesk,sans-serif" font-size="8.5" font-weight="600">3 selected</text>
-            <text x="248" y="140" fill="rgba(150,130,220,.5)" font-family="Space Grotesk,sans-serif" font-size="8">· Max 100 instances per action</text>
-            <!-- action buttons in banner -->
-            <rect x="386" y="130" width="38" height="14" rx="7" fill="rgba(26,104,255,.2)" stroke="rgba(26,104,255,.4)" stroke-width=".7"/>
-            <text x="405" y="141" text-anchor="middle" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700">Retry</text>
-            <rect x="430" y="130" width="44" height="14" rx="7" fill="rgba(39,201,63,.1)" stroke="rgba(39,201,63,.28)" stroke-width=".7"/>
-            <text x="452" y="141" text-anchor="middle" fill="rgba(80,220,100,.85)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700">Resume</text>
-            <rect x="480" y="130" width="42" height="14" rx="7" fill="rgba(255,50,50,.08)" stroke="rgba(255,80,80,.25)" stroke-width=".7"/>
-            <text x="501" y="141" text-anchor="middle" fill="rgba(255,120,120,.75)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="700">Cancel</text>
-            <!-- table headers -->
-            <rect x="158" y="156" width="400" height="20" rx="3" fill="rgba(255,255,255,.025)"/>
-            <text x="178" y="170" fill="rgba(120,130,180,.4)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700" letter-spacing=".08em">EXECUTION NAME</text>
-            <text x="346" y="170" fill="rgba(120,130,180,.4)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700" letter-spacing=".08em">STATUS</text>
-            <text x="430" y="170" fill="rgba(120,130,180,.4)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="700" letter-spacing=".08em">ACTION</text>
-            <!-- row 1 selected running -->
-            <rect x="158" y="180" width="400" height="26" rx="4" fill="rgba(124,58,237,.06)" stroke="rgba(124,58,237,.16)" stroke-width=".7"/>
-            <rect x="163" y="189" width="8" height="8" rx="2" fill="rgba(124,58,237,.8)"/>
-            <path d="M164.5 193 L167 195.5 L171 190.5" stroke="white" stroke-width="1" stroke-linecap="round" fill="none"/>
-            <text x="178" y="197" fill="rgba(200,215,255,.7)" font-family="Space Grotesk,sans-serif" font-size="8.5">purchase-contract-agent_run_001</text>
-            <rect x="346" y="186" width="56" height="13" rx="6.5" fill="rgba(26,104,255,.14)" stroke="rgba(26,104,255,.3)" stroke-width=".7"/>
-            <circle cx="357" cy="192.5" r="2.5" fill="#1A68FF"/>
-            <text x="362" y="196" fill="rgba(107,179,255,.9)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="600">Running</text>
-            <rect x="430" y="186" width="40" height="13" rx="6.5" fill="rgba(255,50,50,.09)" stroke="rgba(255,80,80,.24)" stroke-width=".7"/>
-            <text x="450" y="196" text-anchor="middle" fill="rgba(255,120,120,.8)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="600">Cancel</text>
-            <!-- row 2 error -->
-            <rect x="158" y="210" width="400" height="26" rx="4" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,.04)" stroke-width=".7"/>
-            <rect x="163" y="219" width="8" height="8" rx="2" fill="transparent" stroke="rgba(80,80,120,.3)" stroke-width=".8"/>
-            <text x="178" y="227" fill="rgba(200,215,255,.45)" font-family="Space Grotesk,sans-serif" font-size="8.5">invoice-processing-agent_run_047</text>
-            <rect x="346" y="216" width="46" height="13" rx="6.5" fill="rgba(255,50,50,.1)" stroke="rgba(255,80,80,.28)" stroke-width=".7"/>
-            <circle cx="357" cy="222.5" r="2.5" fill="#FF4444"/>
-            <text x="362" y="226" fill="rgba(255,120,120,.88)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="600">Error</text>
-            <rect x="430" y="216" width="36" height="13" rx="6.5" fill="rgba(26,104,255,.1)" stroke="rgba(26,104,255,.28)" stroke-width=".7"/>
-            <text x="448" y="226" text-anchor="middle" fill="rgba(107,179,255,.85)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="600">Retry</text>
-            <!-- row 3 completed -->
-            <rect x="158" y="240" width="400" height="26" rx="4" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,.03)" stroke-width=".7"/>
-            <rect x="163" y="249" width="8" height="8" rx="2" fill="transparent" stroke="rgba(80,80,120,.25)" stroke-width=".8"/>
-            <text x="178" y="257" fill="rgba(200,215,255,.35)" font-family="Space Grotesk,sans-serif" font-size="8.5">hr-onboarding-agent_run_012</text>
-            <rect x="346" y="246" width="62" height="13" rx="6.5" fill="rgba(39,201,63,.07)" stroke="rgba(39,201,63,.22)" stroke-width=".7"/>
-            <circle cx="357" cy="252.5" r="2.5" fill="#27C93F"/>
-            <text x="362" y="256" fill="rgba(80,220,100,.8)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="600">Completed</text>
-            <!-- row 4 suspended -->
-            <rect x="158" y="270" width="400" height="26" rx="4" fill="rgba(0,0,0,0)" stroke="rgba(255,255,255,.025)" stroke-width=".7"/>
-            <rect x="163" y="279" width="8" height="8" rx="2" fill="transparent" stroke="rgba(80,80,120,.2)" stroke-width=".8"/>
-            <text x="178" y="287" fill="rgba(200,215,255,.25)" font-family="Space Grotesk,sans-serif" font-size="8.5">vendor-eval-agent_run_008</text>
-            <rect x="346" y="276" width="58" height="13" rx="6.5" fill="rgba(255,189,46,.07)" stroke="rgba(255,189,46,.22)" stroke-width=".7"/>
-            <circle cx="357" cy="282.5" r="2.5" fill="#FFBD2E"/>
-            <text x="362" y="286" fill="rgba(255,210,80,.8)" font-family="Space Grotesk,sans-serif" font-size="7.5" font-weight="600">Suspended</text>
-            <rect x="430" y="276" width="42" height="13" rx="6.5" fill="rgba(39,201,63,.07)" stroke="rgba(39,201,63,.2)" stroke-width=".7"/>
-            <text x="451" y="286" text-anchor="middle" fill="rgba(80,220,100,.65)" font-family="Space Grotesk,sans-serif" font-size="7" font-weight="600">Resume</text>
-            <!-- fade -->
-            <rect x="30" y="330" width="540" height="118" fill="url(#gf2)"/>
+            <rect x="0" y="44" width="194" height="436" fill="white" stroke="#E8E8EC" stroke-width="1"/>
+            <text x="22" y="76" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Lobby</text>
+            <text x="22" y="102" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Connectors</text>
+            <text x="22" y="128" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Store</text>
+            <!-- Monitoring active -->
+            <rect x="8" y="136" width="178" height="28" rx="5" fill="#EFF6FF"/>
+            <circle cx="183" cy="150" r="4" fill="#2171FF"/>
+            <text x="22" y="154" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">Monitoring</text>
+            <text x="22" y="180" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Control Tower</text>
+            <!-- sub items under Monitoring -->
+            <rect x="22" y="190" width="1.5" height="48" fill="#E2E8F0"/>
+            <text x="34" y="208" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="10.5">Process Monitor</text>
+            <rect x="30" y="214" width="160" height="22" rx="5" fill="#EFF6FF"/>
+            <text x="40" y="229" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Process and Workflow</text>
+            <!-- main content -->
+            <!-- breadcrumb -->
+            <text x="210" y="62" fill="#2171FF" font-family="-apple-system,sans-serif" font-size="11">Monitor</text>
+            <text x="256" y="62" fill="#64748B" font-family="-apple-system,sans-serif" font-size="11"> / Process and Workflow Instances</text>
+            <!-- page title -->
+            <text x="210" y="84" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="15" font-weight="700">Process and Workflow Instances</text>
+            <!-- tabs -->
+            <rect x="210" y="92" width="68" height="26" rx="5" fill="#EFF6FF"/>
+            <text x="244" y="109" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Process</text>
+            <text x="296" y="109" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Guided Process</text>
+            <!-- filters -->
+            <rect x="210" y="124" width="220" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="222" y="140" fill="#CBD5E1" font-family="-apple-system,sans-serif" font-size="10">Search for instances…</text>
+            <rect x="438" y="124" width="130" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="449" y="140" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Status</text>
+            <text x="558" y="140" fill="#CBD5E1" font-family="-apple-system,sans-serif" font-size="9">▼</text>
+            <rect x="576" y="124" width="118" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="587" y="140" fill="#64748B" font-family="-apple-system,sans-serif" font-size="10">Project</text>
+            <!-- items bar -->
+            <text x="210" y="168" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Items (Selected: 1 of 1830)</text>
+            <!-- Actions button -->
+            <rect x="616" y="156" width="70" height="24" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="651" y="172" text-anchor="middle" fill="#334155" font-family="-apple-system,sans-serif" font-size="10" font-weight="600">Actions ▾</text>
+            <!-- Actions dropdown -->
+            <rect x="618" y="182" width="86" height="68" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1" filter="url(#ds)"/>
+            <defs><filter id="ds" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#00000022"/></filter></defs>
+            <text x="633" y="200" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Retry</text>
+            <rect x="618" y="206" width="86" height="1" fill="#F1F5F9"/>
+            <text x="633" y="222" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Suspend</text>
+            <rect x="618" y="228" width="86" height="1" fill="#F1F5F9"/>
+            <text x="633" y="244" fill="#334155" font-family="-apple-system,sans-serif" font-size="10.5">Cancel</text>
+            <!-- table header -->
+            <rect x="210" y="177" width="400" height="22" rx="3" fill="#F8FAFC"/>
+            <rect x="210" y="177" width="400" height="1" fill="#E2E8F0"/>
+            <rect x="210" y="198" width="400" height="1" fill="#E2E8F0"/>
+            <rect x="222" y="184" width="8" height="8" rx="1.5" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <text x="244" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">TYPE</text>
+            <text x="278" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">NAME</text>
+            <text x="388" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">STATUS</text>
+            <text x="460" y="192" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" letter-spacing=".05em">STARTED ON</text>
+            <!-- Row 1 — selected, Running -->
+            <rect x="210" y="199" width="400" height="26" fill="#EFF6FF"/>
+            <rect x="210" y="224" width="400" height="1" fill="#E2E8F0"/>
+            <rect x="222" y="207" width="8" height="8" rx="1.5" fill="#2171FF"/>
+            <path d="M223.5 211 L226 213.5 L230 208" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- >>> icon -->
+            <text x="244" y="216" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
+            <text x="278" y="216" fill="#1E293B" font-family="-apple-system,sans-serif" font-size="10" font-weight="500">Manage Billing Block A</text>
+            <rect x="388" y="204" width="48" height="16" rx="8" fill="#DBEAFE"/>
+            <text x="412" y="216" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Running</text>
+            <text x="460" y="216" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
+            <!-- Row 2 — Error -->
+            <rect x="210" y="225" width="400" height="26" fill="white"/>
+            <rect x="210" y="250" width="400" height="1" fill="#F1F5F9"/>
+            <rect x="222" y="233" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+            <text x="244" y="242" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
+            <text x="278" y="242" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">Usecase 1</text>
+            <rect x="388" y="230" width="38" height="16" rx="8" fill="#FEE2E2"/>
+            <text x="407" y="242" text-anchor="middle" fill="#991B1B" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Error</text>
+            <text x="460" y="242" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
+            <!-- Row 3 — On Hold -->
+            <rect x="210" y="251" width="400" height="26" fill="white"/>
+            <rect x="210" y="276" width="400" height="1" fill="#F1F5F9"/>
+            <rect x="222" y="259" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+            <text x="244" y="268" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
+            <text x="278" y="268" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">Usecase 3</text>
+            <rect x="388" y="256" width="48" height="16" rx="8" fill="#FEF9C3"/>
+            <text x="412" y="268" text-anchor="middle" fill="#854D0E" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">On Hold</text>
+            <text x="460" y="268" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
+            <!-- Row 4 — Completed -->
+            <rect x="210" y="277" width="400" height="26" fill="white"/>
+            <rect x="210" y="302" width="400" height="1" fill="#F1F5F9"/>
+            <rect x="222" y="285" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+            <text x="244" y="294" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
+            <text x="278" y="294" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">test process</text>
+            <rect x="388" y="282" width="60" height="16" rx="8" fill="#DCFCE7"/>
+            <text x="418" y="294" text-anchor="middle" fill="#166534" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Completed</text>
+            <text x="460" y="294" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
+            <!-- Row 5 Running -->
+            <rect x="210" y="303" width="400" height="26" fill="white"/>
+            <rect x="210" y="328" width="400" height="1" fill="#F1F5F9"/>
+            <rect x="222" y="311" width="8" height="8" rx="1.5" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+            <text x="244" y="320" fill="#F97316" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">&gt;&gt;&gt;</text>
+            <text x="278" y="320" fill="#475569" font-family="-apple-system,sans-serif" font-size="10">test process field validation</text>
+            <rect x="388" y="308" width="48" height="16" rx="8" fill="#DBEAFE"/>
+            <text x="412" y="320" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">Running</text>
+            <text x="460" y="320" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9">Dec 6, 5:33 PM</text>
+            <!-- fade out at bottom -->
+            <defs><linearGradient id="fg2" x1="0" y1="0" x2="0" y2="1"><stop offset="60%" stop-color="#F5F5F8" stop-opacity="0"/><stop offset="100%" stop-color="#F5F5F8"/></linearGradient></defs>
+            <rect x="0" y="350" width="720" height="130" fill="url(#fg2)"/>
           </svg>
         </div>
       </div>
     </div>
 
-    <!-- P3 research — no visual -->
-    <div class="pitem p3 rv d2">
-      <div class="p-grid">
-        <div class="p-inf">
-          <div class="p-tags"><span class="ptag">UX Research</span><span class="ptag">Usability Testing</span><span class="ptag">Joule Studio</span></div>
-          <div class="p-num">03 / 03</div>
-          <h3 class="p-title">Joule Studio Usability Testing</h3>
-          <p class="p-desc">The conversational interface was live — but was it actually working? We needed to understand how users naturally approached agent creation and whether the experience communicated the right things at the right moments.</p>
-          <div class="p-meta">
-            <div class="pm"><span class="pm-k">Role</span><span class="pm-v">UX Designer / Research Specialist — test planning, moderated sessions, synthesis, insight generation &amp; design recommendations</span></div>
-            <div class="pm"><span class="pm-k">Methods</span><span class="pm-v">Moderated sessions · Think-aloud protocol · Affinity mapping · Prioritized recommendations</span></div>
+    <!-- PROJECT 3: Research -->
+    <div class="pcard p3 rv d2">
+      <div class="pcard-inner">
+        <div class="pc-info">
+          <div class="pc-tags"><span class="pc-tag">UX Research</span><span class="pc-tag">Usability Testing</span><span class="pc-tag">Joule Studio</span></div>
+          <div class="pc-num">Project 03 / 03</div>
+          <h3 class="pc-title">Joule Studio Usability Testing</h3>
+          <p class="pc-desc">The conversational interface was live — but was it actually working? We ran moderated sessions to understand how users naturally approached agent creation, identifying gaps between design intent and user reality.</p>
+          <div class="pc-meta">
+            <div class="pcm"><span class="pcm-k">Role</span><span class="pcm-v">UX Designer / Researcher — test planning, moderated sessions, think-aloud protocol, affinity mapping &amp; recommendations</span></div>
+            <div class="pcm"><span class="pcm-k">Methods</span><span class="pcm-v">Moderated usability sessions · Think-aloud · Affinity mapping · Prioritized design recommendations</span></div>
           </div>
-          <div class="p-out">
+          <div class="pc-outcome">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Surfaced actionable insights improving navigation, conversational clarity, and the agent-creation flow — closing the gap between design intent and user reality.</span>
+            <span>Surfaced actionable insights improving navigation, conversational clarity, and agent-creation flow — shipped improvements directly to the live product.</span>
           </div>
-          <div class="p3-stats">
-            <div><div class="pst-n">Live</div><div class="pst-l">User observation sessions with real-time feedback</div></div>
-            <div><div class="pst-n">3+</div><div class="pst-l">Key UX improvements identified &amp; shipped</div></div>
-            <div><div class="pst-n">AI</div><div class="pst-l">Enterprise product tested at real scale</div></div>
+          <div class="p3-grid">
+            <div><div class="p3s-n">Live</div><div class="p3s-l">Moderated sessions with real user observation</div></div>
+            <div><div class="p3s-n">3+</div><div class="p3s-l">Critical UX improvements identified &amp; shipped</div></div>
+            <div><div class="p3s-n">AI</div><div class="p3s-l">Enterprise AI product tested at real scale</div></div>
           </div>
         </div>
       </div>
@@ -589,106 +735,123 @@ footer:hover .f-big{-webkit-text-stroke-color:rgba(26,104,255,.2)}
   </div>
 </section>
 
-<!-- ── About ── -->
+<!-- ════ ABOUT ═══════════════════════════════════ -->
 <section id="about">
   <div class="w">
-    <div class="about-g">
-      <div class="rv" style="position:relative;padding-bottom:18px">
-        <div class="about-pic"><img src="assets/photo.jpg" alt="J Likithesh"></div>
-        <div class="a-badge">
-          <div class="a-bdot"></div>
-          <div><div class="a-bt1">Currently at</div><div class="a-bt2">SAP Labs India</div></div>
-        </div>
+    <div class="about-grid">
+      <div class="about-photo-wrap rv">
+        <div class="about-photo"><img src="assets/photo.jpg" alt="J Likithesh — UX Designer at SAP"></div>
+        <div class="about-float"><div class="af-dot"></div><div><div class="af-l1">Currently at</div><div class="af-l2">SAP Labs India</div></div></div>
       </div>
       <div class="rv d1">
-        <span class="s-num">— 02 / About</span>
-        <div class="a-quote">"Great design makes<br><em>complexity feel simple</em> —<br>not invisible."</div>
-        <div class="a-body">
+        <span class="s-label">— 02 / About</span>
+        <div class="aq">"Great design makes<br><em>complexity feel simple</em> —<br>not invisible."</div>
+        <div class="ab">
           <p>I'm a UX Designer focused on creating meaningful experiences for complex enterprise products. My background in technical communication gives me an edge — I can read a 40-page system spec and translate it into an intuitive user journey.</p>
-          <p>At SAP, I work on AI-first experiences and enterprise workflows, exploring how conversational interfaces and thoughtful interaction design can reduce complexity for real users doing real work.</p>
+          <p>At SAP, I work on AI-first experiences for Joule Studio, exploring how conversational interfaces and thoughtful interaction design can reduce complexity for real users doing real work.</p>
           <p>I'm driven by curiosity, problem-solving, and the belief that the best design decisions come from deeply understanding the system — not just the surface.</p>
         </div>
-        <div class="a-facts">
-          <div class="afact"><div class="afi"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Based in India · Working at SAP Labs</div>
-          <div class="afact"><div class="afi"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>5 years designing enterprise software</div>
-          <div class="afact"><div class="afi"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>Google UX Design Professional Certificate</div>
+        <div class="afacts">
+          <div class="afact"><div class="afact-i"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Based in Bangalore, India · SAP Labs</div>
+          <div class="afact"><div class="afact-i"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>5 years designing enterprise software</div>
+          <div class="afact"><div class="afact-i"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>Google UX Design Professional Certificate</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Skills ── -->
+<!-- ════ SKILLS ══════════════════════════════════ -->
 <section id="skills">
   <div class="w">
-    <div class="rv" style="margin-bottom:36px"><span class="s-num">— 03 / Skills</span><h2 class="s-title">What I bring</h2></div>
-    <div class="sk-g">
-      <div class="sk rv"><div class="sk-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div class="sk-t">UX Design</div><div class="pills"><span class="pill">User Flows</span><span class="pill">IA</span><span class="pill">Interaction Design</span><span class="pill">Wireframing</span><span class="pill">Prototyping</span><span class="pill">Visual Design</span><span class="pill">Design Systems</span></div></div>
-      <div class="sk rv d1"><div class="sk-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sk-t">UX Research</div><div class="pills"><span class="pill">Usability Testing</span><span class="pill">User Observation</span><span class="pill">Affinity Mapping</span><span class="pill">Synthesis</span><span class="pill">UX Writing</span></div></div>
-      <div class="sk rv d2"><div class="sk-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="sk-t">AI &amp; Conversational UX</div><div class="pills"><span class="pill">AI-First UX</span><span class="pill">Conversational UX</span><span class="pill">Agent Design</span><span class="pill">Error States</span><span class="pill">Complex Flows</span></div></div>
-      <div class="sk rv d3"><div class="sk-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="sk-t">Tools</div><div class="pills"><span class="pill">Figma</span><span class="pill">FigJam</span><span class="pill">Maze</span><span class="pill">GitHub</span><span class="pill">HTML/CSS</span><span class="pill">DITA/XML</span></div></div>
-      <div class="cert-wrap rv d1"><a href="https://www.credly.com/badges/2a481396-186b-4948-b0d3-069617e72283/linked_in" target="_blank" rel="noopener" class="cert"><div class="cert-ico">G</div><div><div class="cert-org">Google · Coursera</div><div class="cert-name">UX Design Professional Certificate</div><div class="cert-cta">View credential <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div><svg class="cert-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a></div>
+    <div class="rv" style="margin-bottom:36px"><span class="s-label">— 03 / Skills</span><h2 class="s-title">What I bring</h2></div>
+    <div class="sk-grid">
+      <div class="sk rv"><div class="sk-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div class="sk-t">UX Design</div><div class="pills"><span class="pill">User Flows</span><span class="pill">IA</span><span class="pill">Interaction Design</span><span class="pill">Wireframing</span><span class="pill">Prototyping</span><span class="pill">Visual Design</span><span class="pill">Design Systems</span></div></div>
+      <div class="sk rv d1"><div class="sk-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sk-t">UX Research</div><div class="pills"><span class="pill">Usability Testing</span><span class="pill">User Observation</span><span class="pill">Affinity Mapping</span><span class="pill">Synthesis</span><span class="pill">UX Writing</span></div></div>
+      <div class="sk rv d2"><div class="sk-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="sk-t">AI &amp; Conversational UX</div><div class="pills"><span class="pill">AI-First UX</span><span class="pill">Conversational UX</span><span class="pill">Agent Design</span><span class="pill">Error States</span><span class="pill">Complex Flows</span></div></div>
+      <div class="sk rv d3"><div class="sk-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="sk-t">Tools</div><div class="pills"><span class="pill">Figma</span><span class="pill">FigJam</span><span class="pill">Maze</span><span class="pill">GitHub</span><span class="pill">HTML / CSS</span><span class="pill">DITA / XML</span></div></div>
+      <div class="cert-row rv d1"><a href="https://www.credly.com/badges/2a481396-186b-4948-b0d3-069617e72283/linked_in" target="_blank" rel="noopener" class="cert"><div class="cert-icon">G</div><div><div class="cert-org">Google · Coursera</div><div class="cert-name">UX Design Professional Certificate</div><div class="cert-link">View credential <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div><svg class="cert-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a></div>
     </div>
   </div>
 </section>
 
-<!-- ── Contact ── -->
+<!-- ════ CONTACT ═════════════════════════════════ -->
 <section id="contact">
   <div class="w">
-    <div class="ct-g">
-      <div class="rv"><span class="s-num">— 04 / Contact</span><h2 class="ct-h">Let's build<br>something <em>great.</em></h2><p class="ct-sub">Whether you have a project, want to talk AI-first UX, or simply want to connect — I'd love to hear from you.</p></div>
-      <div class="c-links rv d1">
-        <a href="mailto:likhiteshj19@gmail.com" class="c-link"><div class="c-lic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="c-ll">Email</div><div class="c-lv">likhiteshj19@gmail.com</div></div><svg class="c-arr" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="c-link"><div class="c-lic"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="c-ll">LinkedIn</div><div class="c-lv">linkedin.com/in/likhitesh1996</div></div><svg class="c-arr" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    <div class="ct-grid">
+      <div class="rv"><span class="s-label">— 04 / Contact</span><h2 class="ct-h">Let's build<br>something <em>great.</em></h2><p class="ct-p">Whether you have a project, want to talk AI-first UX, or simply want to connect — I'd love to hear from you.</p></div>
+      <div class="ct-links rv d1">
+        <a href="mailto:likhiteshj19@gmail.com" class="ct-link"><div class="ct-li"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="ct-ll">Email</div><div class="ct-lv">likhiteshj19@gmail.com</div></div><svg class="ct-arr" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a href="https://www.linkedin.com/in/likhitesh1996" target="_blank" rel="noopener" class="ct-link"><div class="ct-li"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="ct-ll">LinkedIn</div><div class="ct-lv">linkedin.com/in/likhitesh1996</div></div><svg class="ct-arr" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Footer ── -->
+<!-- ════ FOOTER ══════════════════════════════════ -->
 <footer>
   <div class="w">
-    <div class="f-big">Let's work together.</div>
-    <div class="f-bar">
-      <span class="f-logo">JL<em>.</em></span>
-      <span class="f-copy">© 2026 J Likithesh · UX Designer at SAP</span>
-      <a href="#hero" class="f-top">Back to top <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></a>
+    <div class="ft-big">Let's work together.</div>
+    <div class="ft-bar">
+      <span class="ft-logo">JL<em>.</em></span>
+      <span class="ft-copy">© 2026 J Likithesh · UX Designer at SAP</span>
+      <a href="#hero" class="ft-top">Back to top ↑</a>
     </div>
   </div>
 </footer>
 
 <script>
-// Cursor
-const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+// ── Cursor
+const _d=document.getElementById('_d'),_r=document.getElementById('_r');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
-(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('a,button,.pitem,.sk,.c-link,.nv-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;_d.style.left=mx+'px';_d.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;_r.style.left=rx+'px';_r.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.pcard,.sk,.ct-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
 
-// Theme
+// ── Theme
 const html=document.documentElement,tBtn=document.getElementById('themeBtn');
-function applyTheme(t){html.setAttribute('data-theme',t);document.getElementById('i-moon').style.display=t==='dark'?'block':'none';document.getElementById('i-sun').style.display=t==='dark'?'none':'block'}
+function applyTheme(t){
+  html.setAttribute('data-theme',t);
+  document.getElementById('ico-moon').style.display=t==='dark'?'block':'none';
+  document.getElementById('ico-sun').style.display=t==='dark'?'none':'block';
+}
 applyTheme(localStorage.getItem('jl-t')||'dark');
 tBtn.addEventListener('click',()=>{const n=html.getAttribute('data-theme')==='dark'?'light':'dark';localStorage.setItem('jl-t',n);applyTheme(n)});
 
-// Top bar scroll
-const bar=document.getElementById('bar');
-window.addEventListener('scroll',()=>bar.classList.toggle('stuck',scrollY>40),{passive:true});
+// ── Top nav scroll behaviour
+const navEl=document.getElementById('nav');
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled',scrollY>50);
+  const pct=scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  prog.style.width=pct+'%';
+},{passive:true});
 
-// Fullscreen nav
-const ov=document.getElementById('nav-ov'),mBtn=document.getElementById('menuBtn');
-function openNav(){ov.classList.add('open');document.body.classList.add('nav-open');ov.setAttribute('aria-hidden','false')}
-function closeNav(){ov.classList.remove('open');document.body.classList.remove('nav-open');ov.setAttribute('aria-hidden','true')}
-mBtn.addEventListener('click',()=>ov.classList.contains('open')?closeNav():openNav());
-document.querySelectorAll('[data-close]').forEach(a=>a.addEventListener('click',closeNav));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav()});
+// ── Active section in nav
+const sections=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a[data-sec]');
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.classList.toggle('active',a.dataset.sec===e.target.id));
+    }
+  });
+},{threshold:.4});
+sections.forEach(s=>secObs.observe(s));
 
-// Reveal
-const robs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');robs.unobserve(e.target)}})},{threshold:.06,rootMargin:'0px 0px -28px 0px'});
-document.querySelectorAll('.rv').forEach(el=>robs.observe(el));
+// ── Mobile menu
+const hamBtn=document.getElementById('hamBtn');
+hamBtn.addEventListener('click',()=>document.body.classList.toggle('mob-open'));
+document.querySelectorAll('[data-mob]').forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('mob-open')));
+
+// ── Reveal on scroll
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -24px 0px'});
+document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
 </script>
 </body>
 </html>

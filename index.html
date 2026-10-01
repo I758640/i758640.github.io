@@ -29,19 +29,12 @@
 /* ─── RESET ──────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--fb);background:var(--bg);color:var(--s1);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+body{font-family:var(--fb);background:var(--bg);color:var(--s1);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--ab)}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-
-/* ─── CURSOR ─────────────────────────────────── */
-#_d,#_r{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#_d{width:6px;height:6px;background:var(--ac);transition:transform .1s,opacity .2s}
-#_r{width:28px;height:28px;border:1.5px solid rgba(33,113,255,.35);transition:width .25s var(--e),height .25s var(--e),border-color .2s}
-body.hov #_r{width:50px;height:50px;border-color:rgba(33,113,255,.18)}
-body.hov #_d{transform:translate(-50%,-50%) scale(.4)}
 
 /* ─── PROGRESS BAR ───────────────────────────── */
 #prog{position:fixed;top:0;left:0;height:2px;background:var(--ac);z-index:600;width:0%;transition:width .1s linear;transform-origin:left}
@@ -66,23 +59,23 @@ body.hov #_d{transform:translate(-50%,-50%) scale(.4)}
   display:inline-flex;align-items:center;gap:5px;
   padding:6px 12px;border-radius:8px;
   font-size:13.5px;font-weight:500;color:var(--s2);
-  transition:color .2s,background .2s;cursor:none;
+  transition:color .2s,background .2s;
 }
 .nav-links a:hover{color:var(--s1);background:var(--s4)}
 .nav-links a.active{color:var(--s1)}
 .nav-links .dot{width:4px;height:4px;border-radius:50%;background:var(--ac);opacity:0;transition:opacity .2s}
 .nav-links a.active .dot{opacity:1}
 .nav-end{display:flex;align-items:center;gap:8px}
-.btn-theme{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;color:var(--s2);cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-theme{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;color:var(--s2);display:flex;align-items:center;justify-content:center;transition:all .2s}
 .btn-theme:hover{border-color:var(--bdh);color:var(--s1);background:var(--s4)}
 .btn-talk{
   background:var(--ac);color:#fff;padding:8px 18px;border-radius:100px;
-  font-size:13px;font-weight:600;border:none;cursor:none;
+  font-size:13px;font-weight:600;border:none;
   transition:background .18s,transform .18s,box-shadow .18s;
 }
 .btn-talk:hover{background:var(--ach);transform:translateY(-1px);box-shadow:0 6px 22px rgba(33,113,255,.32)}
 /* mobile hamburger */
-.nav-ham{display:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;cursor:none;align-items:center;justify-content:center;flex-direction:column;gap:4.5px}
+.nav-ham{display:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:none;align-items:center;justify-content:center;flex-direction:column;gap:4.5px}
 .nav-ham span{width:14px;height:1.5px;background:var(--s1);border-radius:1px;transition:transform .3s var(--e),opacity .2s}
 body.mob-open .nav-ham span:nth-child(1){transform:translateY(3px) rotate(45deg)}
 body.mob-open .nav-ham span:nth-child(2){opacity:0}
@@ -158,17 +151,44 @@ body.mob-open .mob-menu{opacity:1;pointer-events:all}
 .cta-primary{
   display:inline-flex;align-items:center;gap:8px;
   background:var(--ac);color:#fff;padding:13px 28px;
-  border-radius:100px;font-size:14px;font-weight:600;border:none;cursor:none;
+  border-radius:100px;font-size:14px;font-weight:600;border:none;
   transition:background .18s,transform .18s,box-shadow .18s;
 }
 .cta-primary:hover{background:var(--ach);transform:translateY(-2px);box-shadow:0 10px 32px rgba(33,113,255,.36)}
 .cta-ghost{
   display:inline-flex;align-items:center;gap:7px;
   background:transparent;color:var(--s1);padding:13px 26px;
-  border-radius:100px;font-size:14px;font-weight:600;border:1px solid var(--bd);cursor:none;
+  border-radius:100px;font-size:14px;font-weight:600;border:1px solid var(--bd);
   transition:border-color .18s,background .18s,transform .18s;
 }
 .cta-ghost:hover{border-color:var(--bdh);background:var(--s4);transform:translateY(-2px)}
+
+/* ─── RIGHT SECTION DOTS ─────────────────────── */
+#sec-dots{
+  position:fixed;right:22px;top:50%;transform:translateY(-50%);
+  z-index:400;display:flex;flex-direction:column;gap:12px;align-items:center;
+}
+.sd{
+  position:relative;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+}
+.sd-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--s3);transition:all .25s var(--e);
+}
+.sd.active .sd-dot{background:var(--ac);width:8px;height:8px;box-shadow:0 0 0 3px var(--ab)}
+.sd:hover .sd-dot{background:var(--s2)}
+.sd-label{
+  position:absolute;right:26px;top:50%;transform:translateY(-50%);
+  background:var(--bg2);border:1px solid var(--bd);
+  padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600;
+  white-space:nowrap;color:var(--s2);pointer-events:none;
+  opacity:0;transform:translateY(-50%) translateX(4px);
+  transition:opacity .18s,transform .18s;
+}
+.sd:hover .sd-label{opacity:1;transform:translateY(-50%) translateX(0)}
+@media(max-width:900px){#sec-dots{display:none}}
 
 /* hero stats */
 .hero-stats{display:flex;align-items:center;gap:0;border-top:1px solid var(--bd);padding-top:28px}
@@ -221,7 +241,7 @@ section{padding:100px 0}
 .pcard.p3::before{background:linear-gradient(90deg,#0D9488 0%,rgba(52,211,153,.15) 60%,transparent)}
 
 /* layout: 2 col — info left, screen right */
-.pcard-inner{display:grid;grid-template-columns:400px 1fr;min-height:420px}
+.pcard-inner{display:grid;grid-template-columns:400px 1fr;min-height:480px;align-items:stretch}
 .pcard.p3 .pcard-inner{grid-template-columns:1fr}
 
 /* info col */
@@ -246,8 +266,8 @@ section{padding:100px 0}
 .pc-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ac);transition:gap .18s}
 .pc-cta:hover{gap:10px}
 
-/* screen col */
-.pc-screen{overflow:hidden;position:relative;min-height:380px}
+/* screen col — fills 100% height */
+.pc-screen{overflow:hidden;position:relative;align-self:stretch}
 .pc-screen svg{display:block;width:100%;height:100%;position:absolute;inset:0}
 
 /* p3 stats */
@@ -354,9 +374,16 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
 </head>
 <body>
 
-<div id="_d"></div>
-<div id="_r"></div>
 <div id="prog"></div>
+
+<!-- right side section dots -->
+<nav id="sec-dots" aria-label="Section navigation">
+  <a href="#hero"    class="sd" data-sec="hero">    <span class="sd-dot"></span><span class="sd-label">Home</span></a>
+  <a href="#work"    class="sd" data-sec="work">    <span class="sd-dot"></span><span class="sd-label">Work</span></a>
+  <a href="#about"   class="sd" data-sec="about">   <span class="sd-dot"></span><span class="sd-label">About</span></a>
+  <a href="#skills"  class="sd" data-sec="skills">  <span class="sd-dot"></span><span class="sd-label">Skills</span></a>
+  <a href="#contact" class="sd" data-sec="contact"> <span class="sd-dot"></span><span class="sd-label">Contact</span></a>
+</nav>
 
 <!-- ════ NAV ════════════════════════════════════ -->
 <header id="nav">
@@ -398,7 +425,7 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
         <span class="n1">J</span>
         <span class="n2">Likithesh.</span>
       </h1>
-      <div class="hero-sub rv d2"><div class="hero-sub-line"></div>UX Designer — AI &amp; Enterprise Products · 5 Years at SAP</div>
+      <div class="hero-sub rv d2"><div class="hero-sub-line"></div>UX Designer — Joule Studio · 5 Years at SAP</div>
       <p class="hero-desc rv d2">I understand complex enterprise systems, find the <em>real UX problem</em>, and turn them into simple, human-centered experiences that just work.</p>
       <div class="hero-actions rv d3">
         <a href="#work" class="cta-primary">View My Work <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -406,9 +433,8 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
       </div>
       <div class="hero-stats rv d3">
         <div class="hstat"><div class="hstat-n">5+</div><div class="hstat-l">Years Experience</div></div>
-        <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Featured Projects</div></div>
         <div class="hstat"><div class="hstat-n">SAP</div><div class="hstat-l">Current Employer</div></div>
-        <div class="hstat"><div class="hstat-n">AI</div><div class="hstat-l">Focus Area</div></div>
+        <div class="hstat"><div class="hstat-n">Joule</div><div class="hstat-l">Studio Focus</div></div>
       </div>
     </div>
   </div>
@@ -467,101 +493,108 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
           <a href="https://www.figma.com/design/mNi6IrSLcixi5EaJh629MD/" target="_blank" rel="noopener" class="pc-cta">View in Figma <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         </div>
 
-        <!-- Joule Studio Migration UI -->
+        <!-- Joule Studio Migration — dark abstract concept -->
         <div class="pc-screen">
           <svg viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-            <rect width="720" height="480" fill="#F5F5F8"/>
-            <!-- Top header bar -->
-            <rect width="720" height="44" fill="#1C1C1C"/>
-            <!-- SAP logo area -->
-            <rect x="12" y="12" width="20" height="20" rx="2" fill="#F0AB00"/>
-            <text x="38" y="26" fill="white" font-family="Arial,sans-serif" font-size="12" font-weight="700">Build</text>
-            <!-- header right icons -->
-            <circle cx="680" cy="22" r="12" fill="#3A3A3A"/>
-            <text x="680" y="27" text-anchor="middle" fill="#AAA" font-family="Arial,sans-serif" font-size="10">JL</text>
-            <!-- Left sidebar -->
-            <rect x="0" y="44" width="194" height="436" fill="white" stroke="#E8E8EC" stroke-width="1"/>
-            <!-- sidebar items -->
-            <rect x="12" y="62" width="170" height="30" rx="6" fill="#F0F0F8"/>
-            <circle cx="26" cy="77" r="6" fill="#CBD5E1"/>
-            <text x="40" y="82" fill="#64748B" font-family="-apple-system,sans-serif" font-size="11">Lobby</text>
-            <rect x="12" y="98" width="170" height="30" rx="6"/>
-            <circle cx="26" cy="113" r="6" fill="#CBD5E1"/>
-            <text x="40" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Connectors</text>
-            <!-- Joule Studio active -->
-            <rect x="12" y="134" width="170" height="30" rx="6" fill="#EFF6FF"/>
-            <circle cx="26" cy="149" r="6" fill="#2171FF"/>
-            <text x="40" y="154" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="11" font-weight="600">Joule Studio</text>
-            <circle cx="173" cy="149" r="4" fill="#2171FF"/>
-            <rect x="12" y="170" width="170" height="30" rx="6"/>
-            <circle cx="26" cy="185" r="6" fill="#CBD5E1"/>
-            <text x="40" y="190" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Deployments</text>
-            <rect x="12" y="206" width="170" height="30" rx="6"/>
-            <circle cx="26" cy="221" r="6" fill="#CBD5E1"/>
-            <text x="40" y="226" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Settings</text>
-            <!-- sub items under Joule Studio -->
-            <rect x="24" y="242" width="1.5" height="60" fill="#E2E8F0"/>
-            <text x="40" y="260" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="10.5">Solutions</text>
-            <rect x="33" y="268" width="150" height="24" rx="5" fill="#EFF6FF"/>
-            <text x="40" y="284" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="10.5" font-weight="600">Migration Center</text>
-            <!-- Main content area -->
-            <!-- Breadcrumb -->
-            <text x="214" y="62" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11">Joule Studio</text>
-            <text x="290" y="62" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="11"> / </text>
-            <text x="302" y="62" fill="#475569" font-family="-apple-system,sans-serif" font-size="11">Migration Center</text>
-            <!-- Page title -->
-            <text x="214" y="86" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="18" font-weight="700">Migrate to Joule Studio 2.0</text>
-            <!-- Step indicator -->
-            <rect x="214" y="98" width="480" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
-            <!-- Step 1 done -->
-            <circle cx="232" cy="114" r="8" fill="#22C55E"/>
-            <path d="M228 114 L231 117 L236 110" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <text x="245" y="118" fill="#64748B" font-family="-apple-system,sans-serif" font-size="9.5">Compatibility Check</text>
-            <rect x="298" y="113.5" width="32" height="1" fill="#E2E8F0"/>
-            <!-- Step 2 active -->
-            <circle cx="336" cy="114" r="8" fill="#2171FF"/>
-            <text x="336" y="118" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">2</text>
-            <text x="349" y="118" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Select Solutions</text>
-            <rect x="402" y="113.5" width="32" height="1" fill="#E2E8F0"/>
-            <!-- Step 3 -->
-            <circle cx="440" cy="114" r="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="440" y="118" text-anchor="middle" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">3</text>
-            <text x="453" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">Migrate</text>
-            <rect x="485" y="113.5" width="32" height="1" fill="#E2E8F0"/>
-            <!-- Step 4 -->
-            <circle cx="524" cy="114" r="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
-            <text x="524" y="118" text-anchor="middle" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">4</text>
-            <text x="537" y="118" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">Done</text>
-            <!-- Solution cards -->
-            <!-- Card 1 selected -->
-            <rect x="214" y="140" width="228" height="100" rx="8" fill="white" stroke="#2171FF" stroke-width="1.5"/>
-            <rect x="214" y="140" width="228" height="4" rx="2" fill="#2171FF"/>
-            <rect x="370" y="148" width="60" height="18" rx="9" fill="#DBEAFE"/>
-            <text x="400" y="161" text-anchor="middle" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-size="9" font-weight="600">✓ Selected</text>
-            <text x="228" y="168" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">purchase-contract-agent</text>
-            <rect x="228" y="175" width="60" height="16" rx="8" fill="#DCFCE7"/>
-            <text x="258" y="187" text-anchor="middle" fill="#166534" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="600">Compatible ✓</text>
-            <text x="228" y="204" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">v1.4.2 · 3 tools · 4 data sources</text>
-            <text x="228" y="218" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">Last run: 2 hours ago</text>
-            <!-- Card 2 -->
-            <rect x="452" y="140" width="228" height="100" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
-            <text x="466" y="168" fill="#0F172A" font-family="-apple-system,sans-serif" font-size="11" font-weight="700">invoice-processing-agent</text>
-            <rect x="466" y="175" width="78" height="16" rx="8" fill="#FEF9C3"/>
-            <text x="505" y="187" text-anchor="middle" fill="#854D0E" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="600">Review needed</text>
-            <text x="466" y="204" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9.5">v1.2.0 · 5 tools · 1 warning</text>
-            <text x="466" y="218" fill="#94A3B8" font-family="-apple-system,sans-serif" font-size="9">Breaking change in tool API</text>
-            <!-- AI panel -->
-            <rect x="214" y="252" width="466" height="82" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
-            <circle cx="232" cy="279" r="11" fill="#2171FF"/>
-            <text x="232" y="283" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">AI</text>
-            <text x="250" y="272" fill="#1E40AF" font-family="-apple-system,sans-serif" font-size="10" font-weight="700">Joule Assistant</text>
-            <text x="250" y="286" fill="#3B82F6" font-family="-apple-system,sans-serif" font-size="9.5">1 solution selected. purchase-contract-agent is fully compatible with v2.0.</text>
-            <text x="250" y="299" fill="#3B82F6" font-family="-apple-system,sans-serif" font-size="9.5">Estimated migration time: ~3 minutes. No downtime expected.</text>
-            <rect x="250" y="310" width="100" height="18" rx="9" fill="#2171FF"/>
-            <text x="300" y="323" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="9" font-weight="700">Start Migration →</text>
-            <!-- Bottom fade -->
-            <defs><linearGradient id="fg1" x1="0" y1="0" x2="0" y2="1"><stop offset="70%" stop-color="#F5F5F8" stop-opacity="0"/><stop offset="100%" stop-color="#F5F5F8"/></linearGradient></defs>
-            <rect x="194" y="380" width="526" height="100" fill="url(#fg1)"/>
+            <defs>
+              <pattern id="dg" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r=".9" fill="rgba(255,255,255,.05)"/>
+              </pattern>
+              <radialGradient id="gb1" cx="25%" cy="50%" r="50%"><stop offset="0%" stop-color="#1A3A8F" stop-opacity=".35"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <radialGradient id="gb2" cx="75%" cy="50%" r="50%"><stop offset="0%" stop-color="#2171FF" stop-opacity=".2"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <radialGradient id="gb3" cx="50%" cy="50%" r="30%"><stop offset="0%" stop-color="#2171FF" stop-opacity=".06"/><stop offset="100%" stop-color="#060614" stop-opacity="0"/></radialGradient>
+              <marker id="ma1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="rgba(100,150,255,.5)" stroke-width="1.2" stroke-linecap="round"/>
+              </marker>
+              <marker id="ma2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+                <path d="M1 1 L5.5 3.5 L1 6" fill="none" stroke="rgba(33,113,255,.85)" stroke-width="1.4" stroke-linecap="round"/>
+              </marker>
+            </defs>
+            <!-- Background -->
+            <rect width="720" height="480" fill="#060614"/>
+            <rect width="720" height="480" fill="url(#dg)"/>
+            <rect width="720" height="480" fill="url(#gb1)"/>
+            <rect width="720" height="480" fill="url(#gb2)"/>
+            <rect width="720" height="480" fill="url(#gb3)"/>
+
+            <!-- ─ LEFT CARD: Studio 1.0 ─ -->
+            <rect x="44" y="72" width="200" height="258" rx="14" fill="rgba(18,24,60,.92)" stroke="rgba(80,100,210,.22)" stroke-width="1"/>
+            <rect x="44" y="72" width="200" height="3" rx="1" fill="rgba(100,130,220,.5)"/>
+            <text x="64" y="114" fill="rgba(150,175,255,.55)" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" letter-spacing=".18em">STUDIO</text>
+            <text x="62" y="161" fill="rgba(205,218,255,.88)" font-family="-apple-system,sans-serif" font-size="42" font-weight="800">1.0</text>
+            <!-- warning badge -->
+            <rect x="62" y="174" width="90" height="22" rx="11" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.32)" stroke-width="1"/>
+            <circle cx="78" cy="185" r="5.5" fill="#F59E0B"/>
+            <text x="78" y="189" text-anchor="middle" fill="white" font-family="-apple-system,sans-serif" font-size="7.5" font-weight="800">!</text>
+            <text x="89" y="189" fill="#FCD34D" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Needs review</text>
+            <!-- capacity bars -->
+            <text x="62" y="216" fill="rgba(150,170,255,.32)" font-family="-apple-system,sans-serif" font-size="8.5">Solutions compatibility</text>
+            <rect x="62" y="221" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="62" y="221" width="98" height="5" rx="2.5" fill="rgba(100,130,220,.55)"/>
+            <rect x="62" y="234" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="62" y="234" width="72" height="5" rx="2.5" fill="rgba(100,130,220,.42)"/>
+            <rect x="62" y="247" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="62" y="247" width="124" height="5" rx="2.5" fill="rgba(100,130,220,.48)"/>
+            <text x="62" y="275" fill="rgba(150,170,255,.35)" font-family="-apple-system,sans-serif" font-size="9">12 solutions · 4 require action</text>
+            <text x="62" y="291" fill="rgba(150,170,255,.28)" font-family="-apple-system,sans-serif" font-size="9">v1.4.2 — last updated today</text>
+            <text x="62" y="310" fill="rgba(150,170,255,.28)" font-family="-apple-system,sans-serif" font-size="9">Deprecated: 6 APIs flagged</text>
+
+            <!-- ─ CENTER: AI GUIDE ─ -->
+            <!-- outer pulse ring -->
+            <circle cx="360" cy="202" r="78" fill="none" stroke="rgba(33,113,255,.1)" stroke-width="1" stroke-dasharray="6 5"/>
+            <!-- mid ring -->
+            <circle cx="360" cy="202" r="56" fill="none" stroke="rgba(33,113,255,.22)" stroke-width="1.2" stroke-dasharray="4 4"/>
+            <!-- inner filled circle -->
+            <circle cx="360" cy="202" r="40" fill="rgba(33,113,255,.1)" stroke="rgba(33,113,255,.5)" stroke-width="1.5"/>
+            <circle cx="360" cy="202" r="28" fill="rgba(33,113,255,.15)"/>
+            <text x="360" y="197" text-anchor="middle" fill="rgba(150,200,255,.9)" font-family="-apple-system,sans-serif" font-size="13.5" font-weight="700">AI</text>
+            <text x="360" y="213" text-anchor="middle" fill="rgba(100,160,255,.6)" font-family="-apple-system,sans-serif" font-size="8.5" font-weight="700" letter-spacing=".12em">GUIDE</text>
+
+            <!-- curved arrows: V1 → AI (dashed, muted) -->
+            <path d="M247 185 Q295 165 320 198" stroke="rgba(100,140,255,.45)" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ma1)"/>
+            <!-- AI → V2 (solid, bright) -->
+            <path d="M400 198 Q430 175 474 185" stroke="rgba(33,113,255,.85)" stroke-width="1.8" fill="none" marker-end="url(#ma2)"/>
+
+            <!-- ─ RIGHT CARD: Joule V2 ─ -->
+            <rect x="476" y="72" width="200" height="258" rx="14" fill="rgba(10,22,68,.95)" stroke="rgba(33,113,255,.42)" stroke-width="1"/>
+            <rect x="476" y="72" width="200" height="3" rx="1" fill="#2171FF"/>
+            <!-- subtle inner blue glow -->
+            <rect x="477" y="73" width="198" height="256" rx="13" fill="none" stroke="rgba(33,113,255,.06)" stroke-width="8"/>
+            <text x="496" y="114" fill="rgba(100,175,255,.65)" font-family="-apple-system,sans-serif" font-size="10" font-weight="700" letter-spacing=".18em">JOULE</text>
+            <text x="494" y="161" fill="rgba(120,190,255,.98)" font-family="-apple-system,sans-serif" font-size="42" font-weight="800">V2</text>
+            <!-- ready badge -->
+            <rect x="496" y="174" width="70" height="22" rx="11" fill="rgba(16,185,129,.12)" stroke="rgba(16,185,129,.38)" stroke-width="1"/>
+            <circle cx="511" cy="185" r="5" fill="#10B981"/>
+            <text x="520" y="189" fill="#34D399" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Ready</text>
+            <!-- full bars (right card healthy) -->
+            <text x="496" y="216" fill="rgba(100,160,255,.32)" font-family="-apple-system,sans-serif" font-size="8.5">AI-optimized solutions</text>
+            <rect x="496" y="221" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="496" y="221" width="156" height="5" rx="2.5" fill="rgba(33,113,255,.52)"/>
+            <rect x="496" y="234" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="496" y="234" width="148" height="5" rx="2.5" fill="rgba(33,113,255,.45)"/>
+            <rect x="496" y="247" width="156" height="5" rx="2.5" fill="rgba(255,255,255,.05)"/>
+            <rect x="496" y="247" width="156" height="5" rx="2.5" fill="rgba(33,113,255,.4)"/>
+            <text x="496" y="275" fill="rgba(100,160,255,.4)" font-family="-apple-system,sans-serif" font-size="9">12 solutions · AI-optimized</text>
+            <text x="496" y="291" fill="rgba(100,160,255,.32)" font-family="-apple-system,sans-serif" font-size="9">Enhanced APIs · v2.0.0</text>
+            <text x="496" y="310" fill="rgba(100,160,255,.32)" font-family="-apple-system,sans-serif" font-size="9">Zero downtime migration</text>
+
+            <!-- ─ STEP PROGRESS BAR ─ -->
+            <!-- Check (done green) -->
+            <rect x="44" y="368" width="88" height="28" rx="14" fill="rgba(16,185,129,.13)" stroke="rgba(16,185,129,.28)" stroke-width="1"/>
+            <circle cx="63" cy="382" r="5" fill="#10B981"/>
+            <text x="72" y="386" fill="rgba(52,211,153,.88)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Check</text>
+            <!-- Select Version (done green) -->
+            <rect x="140" y="368" width="136" height="28" rx="14" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
+            <circle cx="160" cy="382" r="5" fill="#34D399"/>
+            <text x="169" y="386" fill="rgba(52,211,153,.75)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Select Version</text>
+            <!-- Migrating (active amber) -->
+            <rect x="284" y="368" width="128" height="28" rx="14" fill="rgba(245,158,11,.15)" stroke="rgba(245,158,11,.4)" stroke-width="1"/>
+            <circle cx="303" cy="382" r="5" fill="#F59E0B"/>
+            <text x="313" y="386" fill="rgba(252,211,77,.9)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Migrating...</text>
+            <!-- Complete (future) -->
+            <rect x="420" y="368" width="100" height="28" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.09)" stroke-width="1"/>
+            <circle cx="438" cy="382" r="5" fill="rgba(255,255,255,.18)"/>
+            <text x="448" y="386" fill="rgba(255,255,255,.28)" font-family="-apple-system,sans-serif" font-size="9.5" font-weight="600">Complete</text>
           </svg>
         </div>
       </div>
@@ -801,16 +834,6 @@ footer:hover .ft-big{-webkit-text-stroke-color:rgba(33,113,255,.2)}
 </footer>
 
 <script>
-// ── Cursor
-const _d=document.getElementById('_d'),_r=document.getElementById('_r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;_d.style.left=mx+'px';_d.style.top=my+'px'});
-(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;_r.style.left=rx+'px';_r.style.top=ry+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('a,button,.pcard,.sk,.ct-link').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-});
-
 // ── Theme
 const html=document.documentElement,tBtn=document.getElementById('themeBtn');
 function applyTheme(t){
@@ -830,13 +853,16 @@ window.addEventListener('scroll',()=>{
   prog.style.width=pct+'%';
 },{passive:true});
 
-// ── Active section in nav
+// ── Active section tracking (nav links + right side dots)
 const sections=document.querySelectorAll('section[id]');
 const navAs=document.querySelectorAll('.nav-links a[data-sec]');
+const sideDs=document.querySelectorAll('.sd[data-sec]');
 const secObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      navAs.forEach(a=>a.classList.toggle('active',a.dataset.sec===e.target.id));
+      const id=e.target.id;
+      navAs.forEach(a=>a.classList.toggle('active',a.dataset.sec===id));
+      sideDs.forEach(d=>d.classList.toggle('active',d.dataset.sec===id));
     }
   });
 },{threshold:.4});
